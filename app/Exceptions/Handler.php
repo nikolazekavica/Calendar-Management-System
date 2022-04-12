@@ -2,7 +2,14 @@
 
 namespace App\Exceptions;
 
+use App\Helpers\CalendarResponse;
+use Carbon\Exceptions\InvalidFormatException;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\ErrorHandler\Error\FatalError;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -46,5 +53,41 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $exception)
+    {
+        switch ($exception) {
+            case $exception instanceof ValidationException:
+                return CalendarResponse::multipleError(
+                    $exception->validator->errors()->messages(),
+                    $exception->status
+                );
+            case $exception instanceof QueryException:
+                return CalendarResponse::error(
+                    $exception->getMessage(),
+                    Response::HTTP_INTERNAL_SERVER_ERROR
+                );
+            case $exception instanceof NotFoundHttpException:
+                return CalendarResponse::error(
+                    'Route not found.',
+                    Response::HTTP_INTERNAL_SERVER_ERROR
+                );
+            case $exception instanceof FatalError:
+                return CalendarResponse::error(
+                    $exception->getMessage(),
+                    Response::HTTP_INTERNAL_SERVER_ERROR
+                );
+            case $exception instanceof InvalidFormatException:
+                return CalendarResponse::error(
+                    $exception->getMessage(),
+                    Response::HTTP_BAD_REQUEST
+                );
+            default:
+                return CalendarResponse::error(
+                    $exception->getMessage(),
+                    Response::HTTP_INTERNAL_SERVER_ERROR
+                );
+        }
     }
 }
