@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AvailabilityController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,4 +16,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post("users", [UserController::class, "store"]);
+Route::get("availabilities", [AvailabilityController::class, "all"]);
 
+//user
+Route::post("availabilities", [AvailabilityController::class, "store"]);
+
+//admin
+Route::get("users/{id}/availabilities", [AvailabilityController::class, "allByUserId"]);
+Route::get("availabilities/search", [AvailabilityController::class, "allByDateRange"]);
