@@ -178,6 +178,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         App\Providers\CalendarServiceProvider::class,
+        App\Providers\ValidatorServiceProvider::class,
     ],
 
     /*
