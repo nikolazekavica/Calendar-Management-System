@@ -10,7 +10,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\CalendarResponse;
 use App\Http\Requests\User\UserStoreRequest;
-use App\Http\Services\Abstraction\UserServiceInterface;
+use App\Http\Services\Abstraction\ApplicationServiceInterfaces\UserServiceInterface;
 use Illuminate\Http\Response;
 
 class UserController extends Controller

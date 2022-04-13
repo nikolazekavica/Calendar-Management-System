@@ -6,11 +6,11 @@
  * Time: 15:01
  */
 
-namespace App\Http\Services\Concrete;
+namespace App\Http\Services\Concrete\ApplicationServices;
 
 use App\Http\Repositories\Abstraction\UserRepositoryInterface;
 use App\Http\Requests\User\UserStoreRequest;
-use App\Http\Services\Abstraction\UserServiceInterface;
+use App\Http\Services\Abstraction\ApplicationServiceInterfaces\UserServiceInterface;
 
 class UserService implements UserServiceInterface
 {
