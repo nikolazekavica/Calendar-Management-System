@@ -35,6 +35,7 @@ class User extends Authenticatable
         'first_name',
         'last_name',
         'email',
+        'role_id'
     ];
 
     /**
@@ -43,7 +44,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'created_at', 'updated_at'
+        'password', 'role_id', 'created_at', 'updated_at'
     ];
 
     /**
@@ -53,5 +54,14 @@ class User extends Authenticatable
     public function availability()
     {
         return $this->hasMany(Availability::class,'user_id');
+    }
+
+    /**
+     * Relationship to the User table
+     *
+     */
+    public function role()
+    {
+        return $this->hasOne(Role::class,'role_id','id');
     }
 }

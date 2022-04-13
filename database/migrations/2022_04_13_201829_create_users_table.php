@@ -20,10 +20,15 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->string('email')->unique();
             $table->string('password');
+            $table->integer('role_id')->unsigned();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreign('role_id')->references('id')->on('roles');
+        });
     }
+
 
     /**
      * Reverse the migrations.
@@ -32,6 +37,8 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('users');
+        Schema::enableForeignKeyConstraints();
     }
 };

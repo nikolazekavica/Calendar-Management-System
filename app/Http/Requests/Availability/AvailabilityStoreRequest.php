@@ -29,17 +29,17 @@ class AvailabilityStoreRequest extends FormRequest
         $dateNow = Carbon::now()->setTimezone(config('app.timezone'))->getTimestamp();
 
         return [
-            'title'                 => 'required|max:30',
-            'start_date'            => 'required|date_format:d-m-Y|after_date:'.$dateNow,
-            'end_date'              => 'required|date_format:d-m-Y|after_or_equal:start_date',
-            'start_time'            => 'required|date_format:H:i',
-            'end_time'              => 'required|date_format:H:i|after:start_time',
-            'availability_status'   => Rule::in(Constants::ENUM_AVAILABILITY_STATUS),
-            'description'           => 'required|max:150',
+            'title'                  => 'required|max:30',
+            'start_date'             => 'required|date_format:d-m-Y|after_date:'.$dateNow,
+            'end_date'               => 'required|date_format:d-m-Y|after_or_equal:start_date',
+            'start_time'             => 'required|date_format:H:i',
+            'end_time'               => 'required|date_format:H:i|after:start_time',
+            'availability_status'    => Rule::in(Constants::ENUM_AVAILABILITY_STATUS),
+            'description'            => 'required|max:150',
             'is_recurrences'         => 'required|bool|availability_duration:start_date,end_date,7|multiple_recurrences',
             'start_date_recurrences' => 'required_if:is_recurrences,true|date|after:end_date',
             'end_date_recurrences'   => 'required_if:is_recurrences,true|date|after:start_date_recurrences',
-            'user_id'               => 'required'
+            'user_id'                => 'required|exists:users,id'
         ];
     }
 
