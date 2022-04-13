@@ -58,7 +58,15 @@ class Availability extends Model
         'end_date_recurrences'
     ];
 
-    protected $hidden = ['created_at', 'updated_at'];
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'start_date',
+        'end_date',
+        'start_date_recurrences',
+        'end_date_recurrences',
+        'is_recurrences',
+        'user_id'];
 
     public function getStartDateAttribute()
     {

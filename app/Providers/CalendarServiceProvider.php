@@ -12,10 +12,12 @@ use App\Http\Repositories\Abstraction\AvailabilityRepositoryInterface;
 use App\Http\Repositories\Abstraction\UserRepositoryInterface;
 use App\Http\Repositories\Concrete\AvailabilityRepository;
 use App\Http\Repositories\Concrete\UserRepository;
-use App\Http\Services\Abstraction\AvailabilityServiceInterface;
-use App\Http\Services\Abstraction\UserServiceInterface;
-use App\Http\Services\Concrete\AvailabilityService;
-use App\Http\Services\Concrete\UserService;
+use App\Http\Services\Abstraction\ApplicationServiceInterfaces\AvailabilityServiceInterface;
+use App\Http\Services\Abstraction\ApplicationServiceInterfaces\UserServiceInterface;
+use App\Http\Services\Abstraction\CommonServiceInterfaces\AvailabilityBuilderServiceInterface;
+use App\Http\Services\Concrete\ApplicationServices\AvailabilityService;
+use App\Http\Services\Concrete\ApplicationServices\UserService;
+use App\Http\Services\Concrete\CommonServices\AvailabilityBuilderService;
 use Carbon\Laravel\ServiceProvider;
 
 class CalendarServiceProvider extends ServiceProvider
@@ -27,5 +29,6 @@ class CalendarServiceProvider extends ServiceProvider
 
         $this->app->bind(UserServiceInterface::class, UserService::class);
         $this->app->bind(AvailabilityServiceInterface::class, AvailabilityService::class);
+        $this->app->bind(AvailabilityBuilderServiceInterface::class, AvailabilityBuilderService::class);
     }
 }

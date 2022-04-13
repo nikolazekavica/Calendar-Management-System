@@ -11,7 +11,7 @@ namespace App\Http\Controllers;
 use App\Helpers\CalendarResponse;
 use App\Http\Requests\Availability\AllByDateRangeRequest;
 use App\Http\Requests\Availability\AvailabilityStoreRequest;
-use App\Http\Services\Abstraction\AvailabilityServiceInterface;
+use App\Http\Services\Abstraction\ApplicationServiceInterfaces\AvailabilityServiceInterface;
 use Illuminate\Http\Response;
 
 class AvailabilityController extends Controller

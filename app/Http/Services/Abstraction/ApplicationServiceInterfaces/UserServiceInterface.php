@@ -6,7 +6,7 @@
  * Time: 22:59
  */
 
-namespace App\Http\Services\Abstraction;
+namespace App\Http\Services\Abstraction\ApplicationServiceInterfaces;
 
 use App\Http\Requests\User\UserStoreRequest;
 
