@@ -30,11 +30,12 @@ class UserStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'first_name' => 'required|max:20',
+            'first_name' => 'required|min:5|max:20',
             'last_name'  => 'required|max:20',
             'username'   => 'required|max:20|unique:users,username',
             'email'      => 'required|email|unique:users,email|regex:/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/',
-            'password'   => 'required|regex:/^(?=.*[a-z])(?=\S*?[A-Z])(?=.*\d)(?=.*[!@#$%^&*_+])[A-Za-z\d!@#$%^&*_+]{6,20}$/'
+            'password'   => 'required|regex:/^(?=.*[a-z])(?=\S*?[A-Z])(?=.*\d)(?=.*[!@#$%^&*_+])[A-Za-z\d!@#$%^&*_+]{6,20}$/',
+            'role_id'    => 'required|exists:roles,id'
         ];
     }
 }
