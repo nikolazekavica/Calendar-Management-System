@@ -9,7 +9,7 @@
 namespace App\Http\Services\Concrete\ApplicationServices;
 
 use App\Http\Repositories\Abstraction\UserRepositoryInterface;
-use App\Http\Requests\User\UserStoreRequest;
+use App\Http\Requests\User\RegistrationUserRequest;
 use App\Http\Services\Abstraction\ApplicationServiceInterfaces\UserServiceInterface;
 
 class UserService implements UserServiceInterface
@@ -21,7 +21,7 @@ class UserService implements UserServiceInterface
         $this->userRepository = $userRepository;
     }
 
-    public function store(UserStoreRequest $storeRequest):void
+    public function store(RegistrationUserRequest $storeRequest):void
     {
         $this->userRepository->store($storeRequest->all());
     }

@@ -8,9 +8,9 @@
 
 namespace App\Http\Services\Abstraction\ApplicationServiceInterfaces;
 
-use App\Http\Requests\User\UserStoreRequest;
+use App\Http\Requests\User\RegistrationUserRequest;
 
 interface UserServiceInterface
 {
-    public function store(UserStoreRequest $storeRequest):void;
+    public function store(RegistrationUserRequest $storeRequest):void;
 }
