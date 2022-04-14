@@ -9,11 +9,11 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\CalendarResponse;
-use App\Http\Requests\User\UserStoreRequest;
+use App\Http\Requests\User\RegistrationUserRequest;
 use App\Http\Services\Abstraction\ApplicationServiceInterfaces\UserServiceInterface;
 use Illuminate\Http\Response;
 
-class UserController extends Controller
+class LoginController extends Controller
 {
     private $userService;
 
@@ -22,7 +22,7 @@ class UserController extends Controller
         $this->userService = $userService;
     }
 
-    public function store(UserStoreRequest $request)
+    public function registrationUser(RegistrationUserRequest $request)
     {
         $this->userService->store($request);
 

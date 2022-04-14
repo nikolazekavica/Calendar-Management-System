@@ -19,7 +19,7 @@ class CalendarResponse
      * @param null $data
      * @return JsonResponse
      */
-    public static function success(string $message, int $code, $data = null): JsonResponse
+    public static function success($data, string $message = '', int $code = 200): JsonResponse
     {
         $response = [
             'success' => [
