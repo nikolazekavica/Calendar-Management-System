@@ -5,13 +5,13 @@
  * Date: 7.4.2022.
  * Time: 10:51
  */
-namespace App\Http\Services\Concrete\ApplicationServices;
+namespace App\Http\Services\Concrete\Availability;
 
 use App\Http\Requests\Availability\AllByDateRangeRequest;
 use App\Http\Repositories\Abstraction\AvailabilityRepositoryInterface;
 use App\Http\Requests\Availability\AvailabilityStoreRequest;
-use App\Http\Services\Abstraction\ApplicationServiceInterfaces\AvailabilityServiceInterface;
-use App\Http\Services\Abstraction\CommonServiceInterfaces\AvailabilityBuilderServiceInterface;
+use App\Http\Services\Abstraction\AvailabilityInterfaces\AvailabilityBuilderServiceInterface;
+use App\Http\Services\Abstraction\AvailabilityInterfaces\AvailabilityServiceInterface;
 use App\Http\Traits\DateTimeTrait;
 use Carbon\Carbon;
 

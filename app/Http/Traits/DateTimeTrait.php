@@ -13,7 +13,7 @@ use Carbon\Carbon;
 
 trait DateTimeTrait
 {
-    public static function dateTimeNow():Carbon
+    public function dateTimeNow():Carbon
     {
         return Carbon::now()->setTimezone(config('app.timezone'));
     }

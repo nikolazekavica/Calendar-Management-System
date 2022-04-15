@@ -83,6 +83,11 @@ class Handler extends ExceptionHandler
                     $exception->getMessage(),
                     Response::HTTP_BAD_REQUEST
                 );
+            case $exception instanceof CalendarErrorException:
+                return CalendarResponse::error(
+                    $exception->getMessage(),
+                    $exception->getCode()
+                );
             default:
                 return CalendarResponse::error(
                     $exception->getMessage(),

@@ -25,7 +25,8 @@ Route::post("availabilities", [AvailabilityController::class, "store"]);
 Route::get("users/{id}/availabilities", [AvailabilityController::class, "allByUserId"]);
 Route::get("availabilities/search", [AvailabilityController::class, "allByDateRange"]);
 
-Route::post("users/registration", [LoginController::class, "registrationUser"]);
+Route::post("users/registration", [LoginController::class, "registrationUser"])->middleware('db.transaction');
 Route::post("users/account/verification", [LoginController::class, "verification"]);
 Route::post("users/login", [LoginController::class, "login"]);
+Route::get("/users/verificationUser", [LoginController::class, "verificationUser"]);
 
