@@ -6,10 +6,11 @@
  * Time: 0:23
  */
 
-namespace App\Http\Services\Concrete\CommonServices;
+namespace App\Http\Services\Concrete\Availability;
 
 use App\Helpers\Constants;
-use App\Http\Services\Abstraction\CommonServiceInterfaces\AvailabilityBuilderServiceInterface;
+use App\Http\Services\Abstraction\AvailabilityInterfaces\AvailabilityBuilderServiceInterface;
+use App\Http\Services\Concrete\Common\PaginationService;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Collection;

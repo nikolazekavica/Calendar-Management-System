@@ -28,6 +28,7 @@ class UserSeeder extends Seeder
                 'last_name'  => 'test',
                 'password'   => Hash::make('Test123!'),
                 'email'      => 'test@test.com',
+                'verification_code' => "dasdsadasd",
                 'role_id'    => 2
             ],
         ];

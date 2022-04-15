@@ -6,7 +6,7 @@
  * Time: 22:58
  */
 
-namespace App\Http\Services\Abstraction\ApplicationServiceInterfaces;
+namespace App\Http\Services\Abstraction\AvailabilityInterfaces;
 
 
 use App\Http\Requests\Availability\AllByDateRangeRequest;

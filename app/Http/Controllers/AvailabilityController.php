@@ -5,13 +5,12 @@
  * Date: 6.4.2022.
  * Time: 21:20
  */
-
 namespace App\Http\Controllers;
 
 use App\Helpers\CalendarResponse;
 use App\Http\Requests\Availability\AllByDateRangeRequest;
 use App\Http\Requests\Availability\AvailabilityStoreRequest;
-use App\Http\Services\Abstraction\ApplicationServiceInterfaces\AvailabilityServiceInterface;
+use App\Http\Services\Abstraction\AvailabilityInterfaces\AvailabilityServiceInterface;
 use Illuminate\Http\Response;
 
 class AvailabilityController extends Controller
