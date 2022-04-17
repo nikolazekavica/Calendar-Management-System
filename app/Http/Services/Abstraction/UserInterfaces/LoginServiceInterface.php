@@ -2,17 +2,17 @@
 /**
  * Created by PhpStorm.
  * User: n.zekavica
- * Date: 14.4.2022.
- * Time: 18:18
+ * Date: 15.4.2022.
+ * Time: 17:09
  */
 
 namespace App\Http\Services\Abstraction\UserInterfaces;
 
-use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 interface LoginServiceInterface
 {
-    public function verificationUser(string $link):User;
-    public function prepareVerificationData(array $data):array;
-
+    public function login(array $data);
+    public function logout(Request $data);
 }

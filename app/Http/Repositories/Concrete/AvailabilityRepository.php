@@ -10,6 +10,8 @@ namespace App\Http\Repositories\Concrete;
 
 use App\Http\Repositories\Abstraction\AvailabilityRepositoryInterface;
 use App\Models\Availability;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
 class AvailabilityRepository implements AvailabilityRepositoryInterface
@@ -36,5 +38,16 @@ class AvailabilityRepository implements AvailabilityRepositoryInterface
     {
         $availabilities = $this->model->with('user')->get();
         return $availabilities;
+    }
+
+    public function filterByUser(array $params):Collection
+    {
+        $query = $this->model->newQuery()->with('user');
+
+        foreach($params as $key => $value){
+            $query->whereRelation('user', $key, $value);
+        }
+
+        return $query->get();
     }
 }

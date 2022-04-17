@@ -11,6 +11,7 @@ namespace App\Http\Services\Concrete\User;
 use App\Http\Repositories\Abstraction\UserRepositoryInterface;
 use App\Http\Services\Abstraction\UserInterfaces\UserServiceInterface;
 use App\Http\Traits\DateTimeTrait;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Hash;
 
@@ -32,6 +33,7 @@ class UserService implements UserServiceInterface
     public function store(array $request): array
     {
         $request['verification_code'] = Hash::make($request['username']);
+        $request['password']          = Hash::make($request['password']);
 
         $this->userRepository->store($request);
 
@@ -62,10 +64,10 @@ class UserService implements UserServiceInterface
 
     /**
      * @param array $data
-     * @return Collection
+     * @return \App\Models\User
      */
-    public function search(array $data): Collection
+    public function getByUsernameAndPassword(array $data): User
     {
-        return $this->userRepository->search($data);
+        return $this->userRepository->getByUsernameAndPassword($data);
     }
 }

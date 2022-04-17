@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Helpers\Constants;
 use App\Http\Traits\DateTimeTrait;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Laravel\Passport\Passport;
@@ -16,7 +17,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Models\Model' => 'App\Policies\ModelPolicy',
+        //'App\Models\Model' => 'App\Policies\ModelPolicy',
     ];
 
     /**
@@ -30,8 +31,10 @@ class AuthServiceProvider extends ServiceProvider
 
         Passport::routes();
 
-        Passport::tokensExpireIn($this->dateTimeNow()->addMinutes(30));
+        Passport::tokensExpireIn($this->dateTimeNow()->addDays(1));
         Passport::refreshTokensExpireIn($this->dateTimeNow()->addDays(30));
-        Passport::personalAccessTokensExpireIn($this->dateTimeNow()->addMonths(6));
+        //Passport::personalAccessTokensExpireIn($this->dateTimeNow()->addMonths(6));
+
+        Passport::tokensCan(Constants::SCOPES_LIST);
     }
 }

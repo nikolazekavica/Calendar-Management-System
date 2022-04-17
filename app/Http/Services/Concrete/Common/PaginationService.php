@@ -18,13 +18,13 @@ class PaginationService
      * @param array $data
      * @return array
      */
-    private static function format(array $data): array
+    private static function format(array $data)
     {
         return [
+            'total_results' => $data['total'],
             'current_page'  => $data['current_page'],
             'from'          => $data['from'],
             'to'            => $data['to'],
-            'total_results' => $data['total'],
             'per_page'      => $data['per_page'],
             'next_page_url' => $data['next_page_url'],
             'prev_page_url' => $data['prev_page_url'],
@@ -32,7 +32,7 @@ class PaginationService
         ];
     }
 
-    public static function pagination(Collection $collection, $perPage = 10, $pageName = 'page'):array
+    public static function pagination(Collection $collection, $perPage = 10, $pageName = 'page'): array
     {
         $page = LengthAwarePaginator::resolveCurrentPage($pageName);
 

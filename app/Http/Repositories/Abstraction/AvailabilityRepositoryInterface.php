@@ -13,7 +13,8 @@ use Illuminate\Database\Eloquent\Collection;
 
 interface AvailabilityRepositoryInterface
 {
-    public function store(array $data)  :void;
-    public function allByUserId(int $id):Collection;
-    public function all()               :Collection;
+    public function store(array $data)          :void;
+    public function allByUserId(int $id)        :Collection;
+    public function all()                       :Collection;
+    public function filterByUser(array $params) :Collection;
 }

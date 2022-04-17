@@ -64,4 +64,15 @@ class AvailabilityValidator extends Validator
             return $date >= $params[0];
         });
     }
+
+    public static function allowedAttributes()
+    {
+        self::extend('allowed_attributes', function($attribute, $value, $params, $validator) {
+            if(!in_array($attribute, $params)) {
+                return false;
+            }
+
+            return true;
+        });
+    }
 }

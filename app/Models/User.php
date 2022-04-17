@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Exceptions\CalendarErrorException;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Http\Response;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use League\OAuth2\Server\Exception\OAuthServerException;
 
 /**
  * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
@@ -60,27 +63,33 @@ class User extends Authenticatable
      */
     public function availability()
     {
-        return $this->hasMany(Availability::class,'user_id');
+        return $this->hasMany(Availability::class);
     }
 
-    /**
-     * Relationship to the User table
-     *
-     */
     public function role()
     {
-        return $this->hasOne(Role::class,'role_id','id');
+        return $this->belongsTo(Role::class, 'role_id');
     }
 
     /**
      * Find the user instance for the given username.
+     * Check does user verified.
      *
-     * @param  string  $username
+     * @param  string $username
      * @return Builder|\Illuminate\Database\Eloquent\Model|object
+     * @throws CalendarErrorException
      */
     public function findForPassport($username)
     {
-        return $this->where('username', $username)->first();
+        $user = $this->where('username', $username)->first();
+
+        if($user->verification_status == 0) {
+            throw new CalendarErrorException(
+                'User account is not verified',
+                Response::HTTP_UNAUTHORIZED
+            );
+        }
+        return $user;
     }
 
     /**

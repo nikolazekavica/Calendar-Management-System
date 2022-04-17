@@ -15,6 +15,6 @@ interface UserServiceInterface
 {
     public function store(array $storeRequest):array;
     public function update(array $data, $userId): void;
-    public function search(array $data): Collection;
+    public function getByUsernameAndPassword(array $data):User;
     public function getByEmail(string $email): Collection;
 }

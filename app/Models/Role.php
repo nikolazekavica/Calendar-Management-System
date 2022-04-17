@@ -8,7 +8,6 @@
 
 namespace App\Models;
 
-
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -38,4 +37,9 @@ class Role extends Model
     protected $hidden = [
         'created_at', 'updated_at'
     ];
+
+    public function user()
+    {
+        return $this->hasMany(User::class,'role_id');
+    }
 }

@@ -14,6 +14,11 @@ class Constants
         'free'
     ];
 
+    const SCOPES_LIST             = [
+        'admin'   => 'Admin permissions.',
+        'regular' => 'Regular user permissions'
+    ];
+
     const DATE_FORMAT_MYSQL       = 'Y-m-d';
     const TIME_FORMAT_MYSQL       = 'H:i:s';
     const DATETIME_FORMAT_MYSQL   = 'Y-m-d H:i:s';
@@ -21,5 +26,7 @@ class Constants
     const DATE_FORMAT_PROJECT     = 'd-m-Y';
     const TIME_FORMAT_PROJECT     = 'H:i';
     const DATETIME_FORMAT_PROJECT = 'd-m-Y H:i';
+
+    const VERIFICATION_USER_LINK  = '/api/users/verify?code=';
 
 }
