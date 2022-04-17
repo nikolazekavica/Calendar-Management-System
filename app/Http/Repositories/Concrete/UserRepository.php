@@ -8,9 +8,11 @@
 
 namespace App\Http\Repositories\Concrete;
 
+use App\Exceptions\CalendarErrorException;
 use App\Http\Repositories\Abstraction\UserRepositoryInterface;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -33,18 +35,38 @@ class UserRepository implements UserRepositoryInterface
         $this->model->create($userData);
     }
 
-    public function search(array $params):Collection
+    /**
+     * @param array $params
+     * @return User|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
+     * @throws CalendarErrorException
+     */
+    public function getByUsernameAndPassword(array $params):User
     {
-        $query = $this->model->newQuery();
+        $user = $this->model
+            ->newQuery()
+            ->where('username', $params['username'])
+            ->firstOrFail();
 
-        foreach($params as $key => $value){
-            $query->where($key, $value);
+        if(!$user){
+            throw new CalendarErrorException(
+                'User not exist.',
+                Response::HTTP_FORBIDDEN
+            );
         }
 
-        return $query->get();
+        $validatePassword = Hash::check($params['password'], $user->getAttribute('password'));
+
+        if(!$validatePassword){
+            throw new CalendarErrorException(
+                'Incorrect password.',
+                Response::HTTP_FORBIDDEN
+            );
+        }
+
+        return $user;
     }
 
-    public function getByEmail(string $email):Collection
+    public function getByEmail(string $email): Collection
     {
         return $this->model->where('email', $email)->get();
     }

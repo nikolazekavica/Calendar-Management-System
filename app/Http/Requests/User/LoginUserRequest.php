@@ -2,16 +2,14 @@
 /**
  * Created by PhpStorm.
  * User: n.zekavica
- * Date: 14.4.2022.
- * Time: 18:09
+ * Date: 15.4.2022.
+ * Time: 13:45
  */
-
 namespace App\Http\Requests\User;
-
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class VerificationUserRequest extends FormRequest
+class LoginUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,15 +28,10 @@ class VerificationUserRequest extends FormRequest
      */
     public function rules()
     {
+        //TODO:MESSAGE FOR ERRORS
         return [
-            'code' => 'required',
-        ];
-    }
-
-    public function messages()
-    {
-        return [
-            'code.required' => 'Link is invalid.'
+            'username' => 'required|max:20',
+            'password' => 'required|min:6|max:20',
         ];
     }
 }

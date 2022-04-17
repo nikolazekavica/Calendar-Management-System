@@ -4,10 +4,12 @@ namespace App\Exceptions;
 
 use App\Helpers\CalendarResponse;
 use Carbon\Exceptions\InvalidFormatException;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
+use Laravel\Passport\Exceptions\MissingScopeException;
 use Symfony\Component\ErrorHandler\Error\FatalError;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
@@ -87,6 +89,16 @@ class Handler extends ExceptionHandler
                 return CalendarResponse::error(
                     $exception->getMessage(),
                     $exception->getCode()
+                );
+            case $exception instanceof MissingScopeException:
+                return CalendarResponse::error(
+                    'User dont have permission for this action.',
+                    Response::HTTP_FORBIDDEN
+                );
+            case $exception instanceof AuthenticationException:
+                return CalendarResponse::error(
+                    'User not authenticate.',
+                    Response::HTTP_UNAUTHORIZED
                 );
             default:
                 return CalendarResponse::error(

@@ -5,12 +5,11 @@
  * Date: 8.4.2022.
  * Time: 14:25
  */
-
 namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RegistrationUserRequest extends FormRequest
+class RegisterUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,8 +28,9 @@ class RegistrationUserRequest extends FormRequest
      */
     public function rules()
     {
+        //TODO:MESSAGE FOR ERRORS
         return [
-            'first_name' => 'required|min:5|max:20',
+            'first_name' => 'required|max:20',
             'last_name'  => 'required|max:20',
             'username'   => 'required|max:20|unique:users,username',
             'email'      => 'required|email|unique:users,email|regex:/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/',

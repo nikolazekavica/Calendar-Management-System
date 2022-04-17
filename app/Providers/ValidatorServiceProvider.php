@@ -8,7 +8,6 @@
 
 namespace App\Providers;
 
-
 use App\Http\Validators\AvailabilityValidator;
 use Carbon\Laravel\ServiceProvider;
 
@@ -34,5 +33,6 @@ class ValidatorServiceProvider extends ServiceProvider
         AvailabilityValidator::availabilityDuration();
         AvailabilityValidator::multipleRecurring();
         AvailabilityValidator::afterDate();
+        AvailabilityValidator::allowedAttributes();
     }
 }

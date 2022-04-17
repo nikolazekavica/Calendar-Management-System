@@ -6,34 +6,34 @@
  * Time: 14:24
  */
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Calendar\v1;
 
 use App\Helpers\CalendarResponse;
-use App\Http\Requests\User\RegistrationUserRequest;
-use App\Http\Requests\User\VerificationUserRequest;
-use App\Http\Services\Abstraction\UserInterfaces\LoginServiceInterface;
+use App\Http\Requests\User\RegisterUserRequest;
+use App\Http\Requests\User\VerifyUserRequest;
+use App\Http\Services\Abstraction\UserInterfaces\RegistrationServiceInterface;
 use App\Http\Services\Abstraction\UserInterfaces\UserServiceInterface;
 use App\Http\Services\Concrete\Common\EmailService;
 use App\Mail\UserVerificationMailable;
 use Illuminate\Http\Response;
 
-class LoginController extends Controller
+class RegistrationController extends Controller
 {
     private $userService;
-    private $loginService;
+    private $registrationService;
 
     public function __construct(
         UserServiceInterface $userService,
-        LoginServiceInterface $loginService
+        RegistrationServiceInterface $registrationService
     ) {
-        $this->userService  = $userService;
-        $this->loginService = $loginService;
+        $this->userService         = $userService;
+        $this->registrationService = $registrationService;
     }
 
-    public function registrationUser(RegistrationUserRequest $request)
+    public function register(RegisterUserRequest $request)
     {
         $user      = $this->userService->store($request->all());
-        $emailData = $this->loginService->prepareVerificationData($user);
+        $emailData = $this->registrationService->prepareVerificationEmailData($user);
 
         EmailService::send(
             $user['email'],
@@ -46,9 +46,9 @@ class LoginController extends Controller
         );
     }
 
-    public function verificationUser(VerificationUserRequest $request)
+    public function verify(VerifyUserRequest $request)
     {
-        $user = $this->loginService->verificationUser($request->get('code'));
+        $user = $this->registrationService->verify($request->get('code'));
 
         $this->userService->update(
             ['verification_status' => 1],
