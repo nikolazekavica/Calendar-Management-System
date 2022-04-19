@@ -30,9 +30,9 @@ class ValidatorServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        AvailabilityValidator::afterDate();
         AvailabilityValidator::availabilityDuration();
         AvailabilityValidator::multipleRecurring();
-        AvailabilityValidator::afterDate();
         AvailabilityValidator::allowedAttributes();
     }
 }

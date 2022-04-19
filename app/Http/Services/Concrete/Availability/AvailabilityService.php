@@ -7,11 +7,13 @@
  */
 namespace App\Http\Services\Concrete\Availability;
 
+use App\Helpers\Constants;
 use App\Http\Requests\Availability\AllByDateRangeRequest;
 use App\Http\Repositories\Abstraction\AvailabilityRepositoryInterface;
 use App\Http\Requests\Availability\StoreRequest;
-use App\Http\Services\Abstraction\AvailabilityInterfaces\AvailabilityBuilderServiceInterface;
-use App\Http\Services\Abstraction\AvailabilityInterfaces\AvailabilityServiceInterface;
+use App\Http\Services\Abstraction\Availability\AvailabilityBuilderServiceInterface;
+use App\Http\Services\Abstraction\Availability\AvailabilityServiceInterface;
+use App\Http\Services\Concrete\Common\DateTimeConverter;
 use App\Http\Traits\DateTimeTrait;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -31,9 +33,13 @@ class AvailabilityService implements AvailabilityServiceInterface
         $this->availabilityBuilderService = $availabilityBuilderService;
     }
 
-    public function store(StoreRequest $request):void
+    public function store(array $request):void
     {
-        $this->availabilityRepository->store($request->all());
+        $request['user_id']    = auth('api')->user()->getAuthIdentifier();
+        $request['start_date'] =  Carbon::parse($request['start_date'])->format(Constants::DATE_FORMAT_MYSQL);
+        $request['end_date']   =  Carbon::parse($request['end_date'])->format(Constants::DATE_FORMAT_MYSQL);
+
+        $this->availabilityRepository->store($request);
     }
 
     public function filterByUserId(int $id): ?iterable

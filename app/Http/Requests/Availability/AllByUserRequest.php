@@ -37,7 +37,7 @@ class AllByUserRequest extends FormRequest
     public function messages()
     {
         return [
-            '*.allowed_attributes' => 'Not allowed. Allowed params: first_name, last_name, username, email.'
+            '*.allowed_attributes' => 'Forbidden. Allowed params: first_name, last_name, username, email.'
         ];
     }
 }

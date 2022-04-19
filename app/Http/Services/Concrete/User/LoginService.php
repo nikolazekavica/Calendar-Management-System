@@ -8,9 +8,9 @@
 
 namespace App\Http\Services\Concrete\User;
 
-use App\Http\Services\Abstraction\UserInterfaces\AuthServiceInterface;
-use App\Http\Services\Abstraction\UserInterfaces\LoginServiceInterface;
-use App\Http\Services\Abstraction\UserInterfaces\UserServiceInterface;
+use App\Http\Services\Abstraction\User\AuthServiceInterface;
+use App\Http\Services\Abstraction\User\LoginServiceInterface;
+use App\Http\Services\Abstraction\User\UserServiceInterface;
 use Illuminate\Http\Request;
 
 class LoginService implements LoginServiceInterface
@@ -26,12 +26,12 @@ class LoginService implements LoginServiceInterface
 
     public function login($data)
     {
-        $user = $this->userService->getByUsernameAndPassword($data);
+        $user = $this->userService->getByEmailAndPassword($data);
         return $this->authService->createToken($user);
     }
 
     public function logout(Request $request)
     {
-        $request->user()->token()->revoke();
+        $this->authService->revokeToken($request);
     }
 }

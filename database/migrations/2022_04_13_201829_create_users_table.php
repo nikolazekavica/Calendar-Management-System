@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('verification_code');
             $table->boolean('verification_status')->default(0);
-            $table->integer('role_id')->unsigned();
+            $table->integer('role_id')->unsigned()->default(1);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });

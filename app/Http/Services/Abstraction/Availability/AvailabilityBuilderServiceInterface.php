@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Services\Abstraction\AvailabilityInterfaces;
+namespace App\Http\Services\Abstraction\Availability;
 
 use Illuminate\Database\Eloquent\Collection;
 

@@ -11,7 +11,7 @@ use App\Helpers\CalendarResponse;
 use App\Http\Requests\Availability\AllByDateRangeRequest;
 use App\Http\Requests\Availability\AllByUserRequest;
 use App\Http\Requests\Availability\StoreRequest;
-use App\Http\Services\Abstraction\AvailabilityInterfaces\AvailabilityServiceInterface;
+use App\Http\Services\Abstraction\Availability\AvailabilityServiceInterface;
 use Illuminate\Http\Response;
 
 class AvailabilityController extends Controller
@@ -25,7 +25,7 @@ class AvailabilityController extends Controller
 
     public function store(StoreRequest $request)
     {
-        $this->availabilityService->store($request);
+        $this->availabilityService->store($request->all());
         return CalendarResponse::success(
             "Availability successfully inserted.",
             Response::HTTP_CREATED
@@ -37,7 +37,7 @@ class AvailabilityController extends Controller
         $availabilities = $this->availabilityService->all();
         return CalendarResponse::success(
             "Availabilities successfully returned.",
-            Response::HTTP_CREATED,
+            Response::HTTP_OK,
             $availabilities
         );
     }
@@ -47,7 +47,7 @@ class AvailabilityController extends Controller
         $availabilities = $this->availabilityService->filterByUserId($id);
         return CalendarResponse::success(
             "Availabilities successfully returned.",
-            Response::HTTP_CREATED,
+            Response::HTTP_OK,
             $availabilities
         );
     }
@@ -58,7 +58,7 @@ class AvailabilityController extends Controller
 
         return CalendarResponse::success(
             "Availabilities successfully returned.",
-            Response::HTTP_CREATED,
+            Response::HTTP_OK,
             $availabilities
         );
     }
@@ -69,7 +69,7 @@ class AvailabilityController extends Controller
 
         return CalendarResponse::success(
             "Availabilities successfully returned.",
-            Response::HTTP_CREATED,
+            Response::HTTP_OK,
             $availabilities
         );
     }

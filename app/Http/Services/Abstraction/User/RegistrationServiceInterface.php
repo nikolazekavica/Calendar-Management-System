@@ -6,7 +6,7 @@
  * Time: 18:18
  */
 
-namespace App\Http\Services\Abstraction\UserInterfaces;
+namespace App\Http\Services\Abstraction\User;
 
 use App\Models\User;
 

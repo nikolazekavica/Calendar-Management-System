@@ -3,6 +3,7 @@
 use App\Http\Controllers\Calendar\v1\AvailabilityController;
 use App\Http\Controllers\Calendar\v1\LoginController;
 use App\Http\Controllers\Calendar\v1\RegistrationController;
+use App\Http\Controllers\Calendar\v1\RoleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,7 +22,7 @@ Route::get("/users/filter/availabilities", [AvailabilityController::class, "allB
 Route::get("availabilities/filter", [AvailabilityController::class, "allByDateRange"])->middleware(['auth:api','scopes:admin']);
 
 //regular
-Route::get("users/{id}/availabilities", [AvailabilityController::class, "allByUserId"])->middleware(['auth:api','scopes:regular','id.verified']);
+Route::get("users/{id}/availabilities", [AvailabilityController::class, "allByUserId"])->middleware(['auth:api','id.verified']);
 Route::post("availabilities", [AvailabilityController::class, "store"])->middleware(['auth:api','scopes:regular']);
 
 //all
@@ -29,6 +30,8 @@ Route::post("users/register", [RegistrationController::class, "register"])->midd
 Route::post("users/login", [LoginController::class, "login"]);
 Route::post("users/logout", [LoginController::class, "logout"])->middleware(['auth:api']);;
 Route::get("users/verify", [RegistrationController::class, "verify"]);
+
+Route::get("users/roles", [RoleController::class, "all"])->middleware(['auth:api']);
 
 
 

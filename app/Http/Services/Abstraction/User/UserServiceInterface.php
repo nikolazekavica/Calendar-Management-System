@@ -6,7 +6,7 @@
  * Time: 22:59
  */
 
-namespace App\Http\Services\Abstraction\UserInterfaces;
+namespace App\Http\Services\Abstraction\User;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
@@ -15,6 +15,6 @@ interface UserServiceInterface
 {
     public function store(array $storeRequest):array;
     public function update(array $data, $userId): void;
-    public function getByUsernameAndPassword(array $data):User;
+    public function getByEmailAndPassword(array $data):User;
     public function getByEmail(string $email): Collection;
 }

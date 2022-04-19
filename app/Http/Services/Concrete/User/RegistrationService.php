@@ -9,8 +9,8 @@ namespace App\Http\Services\Concrete\User;
 
 use App\Exceptions\CalendarErrorException;
 use App\Helpers\Constants;
-use App\Http\Services\Abstraction\UserInterfaces\RegistrationServiceInterface;
-use App\Http\Services\Abstraction\UserInterfaces\UserServiceInterface;
+use App\Http\Services\Abstraction\User\RegistrationServiceInterface;
+use App\Http\Services\Abstraction\User\UserServiceInterface;
 use App\Models\User;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Crypt;
@@ -31,12 +31,13 @@ class RegistrationService implements RegistrationServiceInterface
      */
     public function verify($code):User
     {
-        $userData = Crypt::decrypt($code);
-        $user     = $this->userService->getByEmail($userData['email']);
-
-        if(!$user->firstOrFail()){
+        try{
+            $userData = Crypt::decrypt($code);
+            $user     = $this->userService->getByEmail($userData['email']);
+            $user->firstOrFail();
+        } catch (\Exception $exception) {
             throw new CalendarErrorException(
-                'Verification link is not valid',
+                'Verification link is not valid.',
                 Response::HTTP_BAD_REQUEST
             );
         }

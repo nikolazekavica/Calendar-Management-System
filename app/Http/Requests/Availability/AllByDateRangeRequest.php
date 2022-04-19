@@ -9,6 +9,7 @@
 namespace App\Http\Requests\Availability;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 class AllByDateRangeRequest extends FormRequest
 {

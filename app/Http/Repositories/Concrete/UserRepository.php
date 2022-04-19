@@ -40,17 +40,18 @@ class UserRepository implements UserRepositoryInterface
      * @return User|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
      * @throws CalendarErrorException
      */
-    public function getByUsernameAndPassword(array $params):User
+    public function getByEmailAndPassword(array $params):User
     {
         $user = $this->model
             ->newQuery()
-            ->where('username', $params['username'])
-            ->firstOrFail();
+            ->where('email', $params['email'])
+            ->where('verification_status',1)
+            ->first();
 
-        if(!$user){
+        if(!$user) {
             throw new CalendarErrorException(
-                'User not exist.',
-                Response::HTTP_FORBIDDEN
+                'User account is not verified',
+                Response::HTTP_UNAUTHORIZED
             );
         }
 

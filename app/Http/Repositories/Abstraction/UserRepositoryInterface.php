@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Collection;
 interface UserRepositoryInterface
 {
     public function store(array $data):void;
-    public function getByUsernameAndPassword(array $data):User;
+    public function getByEmailAndPassword(array $data):User;
     public function getByEmail(string $email):Collection;
     public function update(array $data, int $userId);
 }

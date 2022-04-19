@@ -28,14 +28,21 @@ class RegisterUserRequest extends FormRequest
      */
     public function rules()
     {
-        //TODO:MESSAGE FOR ERRORS
         return [
             'first_name' => 'required|max:20',
             'last_name'  => 'required|max:20',
             'username'   => 'required|max:20|unique:users,username',
             'email'      => 'required|email|unique:users,email|regex:/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/',
             'password'   => 'required|regex:/^(?=.*[a-z])(?=\S*?[A-Z])(?=.*\d)(?=.*[!@#$%^&*_+])[A-Za-z\d!@#$%^&*_+]{6,20}$/',
-            'role_id'    => 'required|exists:roles,id'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'password.regex' => 'Incorrect password format. Password length (min. 6 characters and max. 20).'.
+                'Must contain letters,numbers,capital letter and special characters(!@#%&*).'.
+                'Spaces are not permitted.',
         ];
     }
 }

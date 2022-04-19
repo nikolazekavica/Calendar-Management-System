@@ -24,7 +24,7 @@ return new class extends Migration
             $table->enum('availability_status',Constants::ENUM_AVAILABILITY_STATUS);
             $table->string('timezone');
             $table->string('description')->nullable();
-            $table->boolean('is_recurrences');
+            $table->boolean('is_recurrences')->default(0);
             $table->date('start_date_recurrences')->nullable();
             $table->date('end_date_recurrences')->nullable();
             $table->integer('user_id')->unsigned();

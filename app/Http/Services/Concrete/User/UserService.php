@@ -9,7 +9,7 @@
 namespace App\Http\Services\Concrete\User;
 
 use App\Http\Repositories\Abstraction\UserRepositoryInterface;
-use App\Http\Services\Abstraction\UserInterfaces\UserServiceInterface;
+use App\Http\Services\Abstraction\User\UserServiceInterface;
 use App\Http\Traits\DateTimeTrait;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
@@ -66,8 +66,8 @@ class UserService implements UserServiceInterface
      * @param array $data
      * @return \App\Models\User
      */
-    public function getByUsernameAndPassword(array $data): User
+    public function getByEmailAndPassword(array $data): User
     {
-        return $this->userRepository->getByUsernameAndPassword($data);
+        return $this->userRepository->getByEmailAndPassword($data);
     }
 }

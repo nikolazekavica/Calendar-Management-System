@@ -9,7 +9,7 @@
 namespace App\Http\Services\Concrete\Availability;
 
 use App\Helpers\Constants;
-use App\Http\Services\Abstraction\AvailabilityInterfaces\AvailabilityBuilderServiceInterface;
+use App\Http\Services\Abstraction\Availability\AvailabilityBuilderServiceInterface;
 use App\Http\Services\Concrete\Common\PaginationService;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
@@ -24,8 +24,8 @@ class AvailabilityBuilderService implements AvailabilityBuilderServiceInterface
         foreach($availabilities as $availability) {
 
             $availabilityPeriod = CarbonPeriod::create(
-                $availability['start_date'],
-                $availability['end_date']
+                $availability->getAttribute('start_date'),
+                $availability->getAttribute('end_date'),
             )->toArray();
 
             $period = new Collection();
@@ -33,7 +33,7 @@ class AvailabilityBuilderService implements AvailabilityBuilderServiceInterface
             foreach ($availabilityPeriod as $availabilityDate) {
 
                 $date                 = $availabilityDate->format(Constants::DATE_FORMAT_PROJECT);
-                $dateWithTime         = $date.' '.$availability['start_time'];
+                $dateWithTime         = $date.' '.$availability->getAttribute('start_time');
                 $availabilityDateTime = Carbon::parse($dateWithTime)->getTimestamp();
 
                 if($availabilityDateTime     >= $startDateSearch
@@ -42,11 +42,11 @@ class AvailabilityBuilderService implements AvailabilityBuilderServiceInterface
                     $period->push($availabilityDate->format(Constants::DATE_FORMAT_PROJECT));
                 }
 
-                if($availability['is_recurrences'] == 1) {
+                if($availability->getAttribute('is_recurrences') == 1) {
 
                     $periodRecurring = CarbonPeriod::create(
-                        $availability['start_date_recurrences'],
-                        $availability['end_date_recurrences']
+                        $availability->getAttribute('start_date_recurrences'),
+                        $availability->getAttribute('end_date_recurrences')
                     )->toArray();
 
                     foreach ($periodRecurring as $recurringDate){
@@ -69,8 +69,20 @@ class AvailabilityBuilderService implements AvailabilityBuilderServiceInterface
                 PaginationService::pagination(
                     $period,
                     10,
-                    'period_'.$availability['id'].'_page'
+                    'period_'.$availability->getAttribute('id').'_page'
                 )
+            );
+
+            $availability->setAttribute(
+                'start_time',
+                Carbon::parse($availability->getAttribute('start_time'))
+                    ->format(Constants::TIME_FORMAT_PROJECT)
+            );
+
+            $availability->setAttribute(
+                'end_time',
+                Carbon::parse($availability->getAttribute('end_time'))
+                    ->format(Constants::TIME_FORMAT_PROJECT)
             );
 
             $availabilityProjections->push($availability);

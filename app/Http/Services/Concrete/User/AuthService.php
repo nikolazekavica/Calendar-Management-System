@@ -8,12 +8,10 @@
 
 namespace App\Http\Services\Concrete\User;
 
-
 use App\Http\Services\Abstraction\Common\HttpClientInterface;
-use App\Http\Services\Abstraction\UserInterfaces\AuthServiceInterface;
+use App\Http\Services\Abstraction\User\AuthServiceInterface;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
-use Laravel\Passport\Passport;
+use Illuminate\Http\Request;
 
 class AuthService implements AuthServiceInterface
 {
@@ -33,7 +31,10 @@ class AuthService implements AuthServiceInterface
     {
         $token = $this->httpClient
            ->setMethod('POST')
-           ->setHeaders(['Content-Type' => 'application/x-www-form-urlencoded'])
+           ->setHeaders([
+               'Content-Type' => 'application/x-www-form-urlencoded',
+               'x-testing'    => app()->environment('testing')
+           ])
            ->setUrl('http://localhost/oauth/token')
            ->setRequest(
                [
@@ -51,18 +52,8 @@ class AuthService implements AuthServiceInterface
        return $token;
     }
 
-    public function removeToken(array $data)
+    public function revokeToken(Request $request)
     {
-        // TODO: Implement removeToken() method.
-    }
-
-    public function refreshToken(array $data)
-    {
-        // TODO: Implement refreshToken() method.
-    }
-
-    public function validateToken(array $data)
-    {
-        // TODO: Implement validateToken() method.
+        $request->user()->token()->revoke();
     }
 }

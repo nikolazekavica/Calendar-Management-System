@@ -9,8 +9,9 @@
 namespace App\Models;
 
 use App\Helpers\Constants;
-use Carbon\Carbon;
+
 use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -20,13 +21,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Availability extends Model
 {
+    use HasFactory;
+
     public $timestamps = false;
 
     protected $dateFormat = Constants::DATE_FORMAT_MYSQL;
-    protected $timeFormat = Constants::TIME_FORMAT_MYSQL;
-
-    protected $responseDateFormat = Constants::DATE_FORMAT_PROJECT;
-    protected $responseTimeFormat = Constants::TIME_FORMAT_PROJECT;
 
     protected $table      = 'availabilities';
     protected $primaryKey = 'id';
@@ -52,8 +51,6 @@ class Availability extends Model
     ];
 
     protected $dates = [
-        'start_date',
-        'end_date',
         'start_date_recurrences',
         'end_date_recurrences'
     ];
@@ -66,43 +63,8 @@ class Availability extends Model
         'start_date_recurrences',
         'end_date_recurrences',
         'is_recurrences',
-        'user_id'];
-
-    public function getStartDateAttribute()
-    {
-        $startDate = Carbon::createFromFormat($this->dateFormat, $this->attributes['start_date']);
-        return $startDate->format($this->responseDateFormat);
-    }
-
-    public function getEndDateAttribute()
-    {
-        $endDate = Carbon::createFromFormat($this->dateFormat, $this->attributes['end_date']);
-        return $endDate->format($this->responseDateFormat);
-    }
-
-    public function getStartDateRecurringAttribute()
-    {
-        $startDate = Carbon::createFromFormat($this->dateFormat, $this->attributes['start_date_recurrences']);
-        return $startDate->format($this->responseDateFormat);
-    }
-
-    public function getEndDateRecurringAttribute()
-    {
-        $startDate = Carbon::createFromFormat($this->dateFormat, $this->attributes['end_date_recurrences']);
-        return $startDate->format($this->responseDateFormat);
-    }
-
-    public function getStartTimeAttribute()
-    {
-        $startTime= Carbon::createFromFormat($this->timeFormat, $this->attributes['start_time']);
-        return $startTime->format($this->responseTimeFormat);
-    }
-
-    public function getEndTimeAttribute()
-    {
-        $endTime = Carbon::createFromFormat($this->timeFormat, $this->attributes['end_time']);
-        return $endTime->format($this->responseTimeFormat);
-    }
+        'user_id'
+    ];
 
     public function user()
     {

@@ -28,10 +28,17 @@ class LoginUserRequest extends FormRequest
      */
     public function rules()
     {
-        //TODO:MESSAGE FOR ERRORS
         return [
-            'username' => 'required|max:20',
+            'email'    => 'required|exists:users,email|regex:/^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/',
             'password' => 'required|min:6|max:20',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'email.regex'  => 'Incorrect email format.',
+            'email.exists' => 'Email does not exist.'
         ];
     }
 }

@@ -6,7 +6,7 @@
  * Time: 17:09
  */
 
-namespace App\Http\Services\Abstraction\UserInterfaces;
+namespace App\Http\Services\Abstraction\User;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;

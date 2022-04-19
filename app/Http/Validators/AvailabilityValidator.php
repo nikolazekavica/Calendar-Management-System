@@ -20,9 +20,13 @@ class AvailabilityValidator extends Validator
 
             $data = $validator->getData();
 
-            $startTime     = Carbon::parse($data[$params[0]]);
-            $finishTime    = Carbon::parse($data[$params[1]]);
-            $totalDuration = $finishTime->diffInDays($startTime);
+            try{
+                $startTime  = Carbon::parse($data[$params[0]]);
+                $finishTime = Carbon::parse($data[$params[1]]);
+                $totalDuration = $finishTime->diffInDays($startTime);
+            }catch (\Exception $exception){
+                return false;
+            }
 
             return $totalDuration <= $params[2];
         });
@@ -32,14 +36,16 @@ class AvailabilityValidator extends Validator
     {
         self::extend('multiple_recurrences', function($attribute, $value, $params, $validator) {
 
-            $data    = $validator->getData();
+            $data   = $validator->getData();
+            $userId = auth('api')->user()->getAuthIdentifier();
+
             $dateNow = Carbon::now()
                 ->timezone(config('app.timezone'))
                 ->format(Constants::DATE_FORMAT_MYSQL);
 
             if($data['is_recurrences'] == true) {
-                $availability = Availability::where('is_recurrences','=',1)
-                    ->where('user_id', $data['user_id'])
+                $availability = Availability::where('is_recurrences',1)
+                    ->where('user_id', $userId)
                     ->where(
                         'end_date_recurrences',
                         '>',
@@ -57,9 +63,14 @@ class AvailabilityValidator extends Validator
     {
         self::extend('after_date', function($attribute, $value, $params, $validator) {
 
-            $data        = $validator->getData();
-            $dateAndTime = $data['start_date'].' '.$data['start_time'];
-            $date        = Carbon::parse($dateAndTime)->getTimestamp();
+            $data = $validator->getData();
+
+            try{
+                $dateAndTime = $data['start_date'].' '.$data['start_time'];
+                $date        = Carbon::parse($dateAndTime)->getTimestamp();
+            }catch (\Exception $exception){
+                return false;
+            }
 
             return $date >= $params[0];
         });

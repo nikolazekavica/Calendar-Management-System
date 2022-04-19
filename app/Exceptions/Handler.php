@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use App\Helpers\CalendarResponse;
 use Carbon\Exceptions\InvalidFormatException;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Response;
@@ -62,7 +63,7 @@ class Handler extends ExceptionHandler
         switch ($exception) {
             case $exception instanceof ValidationException:
                 return CalendarResponse::multipleError(
-                    $exception->validator->errors()->messages(),
+                    $exception->validator->errors()->getMessages(),
                     $exception->status
                 );
             case $exception instanceof QueryException:

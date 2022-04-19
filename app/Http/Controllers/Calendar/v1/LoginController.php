@@ -7,9 +7,11 @@
  */
 namespace App\Http\Controllers\Calendar\v1;
 
+use App\Helpers\CalendarResponse;
 use App\Http\Requests\User\LoginUserRequest;
-use App\Http\Services\Abstraction\UserInterfaces\LoginServiceInterface;
+use App\Http\Services\Abstraction\User\LoginServiceInterface;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class LoginController
 {
@@ -23,23 +25,16 @@ class LoginController
     public function login(LoginUserRequest $request)
     {
         return $this->loginService->login($request->all());
-
-/*        return CalendarResponse::success(
-            "Availabilities successfully returned.",
-            Response::HTTP_CREATED,
-            $token
-        );*/
     }
 
     public function logout(Request $request)
     {
-        return $this->loginService->logout($request);
+        $this->loginService->logout($request);
 
-        /*        return CalendarResponse::success(
-                    "Availabilities successfully returned.",
-                    Response::HTTP_CREATED,
-                    $token
-                );*/
+        return CalendarResponse::success(
+            "User successfully logout.",
+            Response::HTTP_OK
+        );
     }
 
 

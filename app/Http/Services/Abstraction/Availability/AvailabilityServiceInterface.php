@@ -6,7 +6,7 @@
  * Time: 22:58
  */
 
-namespace App\Http\Services\Abstraction\AvailabilityInterfaces;
+namespace App\Http\Services\Abstraction\Availability;
 
 
 use App\Http\Requests\Availability\AllByDateRangeRequest;
@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 
 interface AvailabilityServiceInterface
 {
-    public function store(StoreRequest $request):void;
+    public function store(array $request):void;
     public function filterByUserId(int $id): ?iterable;
     public function filterByDateRange(AllByDateRangeRequest $request);
     public function filterByUser(Request $request);

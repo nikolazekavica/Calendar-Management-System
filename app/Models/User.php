@@ -6,10 +6,8 @@ use App\Exceptions\CalendarErrorException;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Http\Response;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
-use League\OAuth2\Server\Exception\OAuthServerException;
 
 /**
  * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
@@ -81,15 +79,7 @@ class User extends Authenticatable
      */
     public function findForPassport($username)
     {
-        $user = $this->where('username', $username)->first();
-
-        if($user->verification_status == 0) {
-            throw new CalendarErrorException(
-                'User account is not verified',
-                Response::HTTP_UNAUTHORIZED
-            );
-        }
-        return $user;
+        return $this->where('username', $username)->first();
     }
 
     /**
