@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
-class RegistrationTest extends TestCase
+class RegistrationControllerTest extends TestCase
 {
     // REGISTER
 
@@ -103,7 +103,7 @@ class RegistrationTest extends TestCase
             ->first()
             ->getAttribute('verification_status');
 
-        self::assertEquals(1, $verificationStatus);
+        $this->assertEquals(1, $verificationStatus);
         $response->assertStatus(Response::HTTP_OK);
         $response->assertJson([
             "success" => [
@@ -127,7 +127,7 @@ class RegistrationTest extends TestCase
             ->first()
             ->getAttribute('verification_status');
 
-        self::assertEquals(0, $verificationStatus);
+        $this->assertEquals(0, $verificationStatus);
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
         $response->assertJson([
             "errors" => [

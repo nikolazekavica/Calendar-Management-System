@@ -13,7 +13,17 @@ use Illuminate\Support\Facades\Mail;
 
 class EmailService
 {
-    public static function send(string $sendTo, Mailable $mailable)
+    private static $instance = null;
+
+    public static function getInstance(): self
+    {
+        if (!isset(self::$instance)) {
+            self::$instance = new EmailService();
+        }
+        return self::$instance;
+    }
+
+    public function send(string $sendTo, Mailable $mailable)
     {
         Mail::to($sendTo)->send($mailable);
     }

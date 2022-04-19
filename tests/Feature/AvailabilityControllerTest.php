@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Hash;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 
-class AvailabilityTest extends TestCase
+class AvailabilityControllerTest extends TestCase
 {
     //AVAILABILITY STORE
     /**

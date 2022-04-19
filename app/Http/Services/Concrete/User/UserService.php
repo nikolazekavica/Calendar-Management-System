@@ -9,6 +9,7 @@
 namespace App\Http\Services\Concrete\User;
 
 use App\Http\Repositories\Abstraction\UserRepositoryInterface;
+use App\Http\Repositories\Concrete\UserRepository;
 use App\Http\Services\Abstraction\User\UserServiceInterface;
 use App\Http\Traits\DateTimeTrait;
 use App\Models\User;
@@ -19,11 +20,21 @@ class UserService implements UserServiceInterface
 {
     use DateTimeTrait;
 
+    private static $instance = null;
+
     protected $userRepository;
 
     public function __construct(UserRepositoryInterface $userRepository)
     {
         $this->userRepository = $userRepository;
+    }
+
+    public static function getInstance(): self
+    {
+        if (!isset(self::$instance)) {
+            self::$instance = new UserService(new UserRepository(new User()));
+        }
+        return self::$instance;
     }
 
     /**

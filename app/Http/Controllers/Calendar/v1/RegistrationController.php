@@ -35,7 +35,7 @@ class RegistrationController extends Controller
         $user      = $this->userService->store($request->all());
         $emailData = $this->registrationService->prepareVerificationEmailData($user);
 
-        EmailService::send(
+        EmailService::getInstance()->send(
             $user['email'],
             new UserVerificationMailable($emailData)
         );

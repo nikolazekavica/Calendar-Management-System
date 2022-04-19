@@ -13,7 +13,7 @@ use Illuminate\Http\Response;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 
-class RoleTest extends TestCase
+class RoleControllerTest extends TestCase
 {
     public function test_role_all()
     {

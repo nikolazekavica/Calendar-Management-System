@@ -12,6 +12,7 @@ use App\Http\Services\Abstraction\Common\HttpClientInterface;
 use App\Http\Services\Abstraction\User\AuthServiceInterface;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Psr\Http\Message\ResponseInterface;
 
 class AuthService implements AuthServiceInterface
 {
@@ -27,7 +28,7 @@ class AuthService implements AuthServiceInterface
      * @return \Psr\Http\Message\ResponseInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function createToken(User $user)
+    public function createToken(User $user) :ResponseInterface
     {
         $token = $this->httpClient
            ->setMethod('POST')

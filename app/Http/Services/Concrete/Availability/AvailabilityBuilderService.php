@@ -17,6 +17,16 @@ use Illuminate\Database\Eloquent\Collection;
 
 class AvailabilityBuilderService implements AvailabilityBuilderServiceInterface
 {
+    private static $instance = null;
+
+    public static function getInstance(): self
+    {
+        if (!isset(self::$instance)) {
+            self::$instance = new AvailabilityBuilderService();
+        }
+        return self::$instance;
+    }
+
     public function build(Collection $availabilities, $startDateSearch, $endDateSearch):array
     {
         $availabilityProjections = new Collection();
@@ -66,7 +76,7 @@ class AvailabilityBuilderService implements AvailabilityBuilderServiceInterface
 
             $availability->setAttribute(
                 'period',
-                PaginationService::pagination(
+                PaginationService::getInstance()->pagination(
                     $period,
                     10,
                     'period_'.$availability->getAttribute('id').'_page'
@@ -88,6 +98,6 @@ class AvailabilityBuilderService implements AvailabilityBuilderServiceInterface
             $availabilityProjections->push($availability);
         }
 
-        return PaginationService::pagination($availabilityProjections);
+        return PaginationService::getInstance()->pagination($availabilityProjections);
     }
 }

@@ -14,7 +14,17 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class PaginationService
 {
-    public static function pagination(Collection $collection, $perPage = 10, $pageName = 'page'): array
+    private static $instance = null;
+
+    public static function getInstance(): self
+    {
+        if (!isset(self::$instance)) {
+            self::$instance = new PaginationService();
+        }
+        return self::$instance;
+    }
+
+    public function pagination(Collection $collection, $perPage = 10, $pageName = 'page'): array
     {
         $page = LengthAwarePaginator::resolveCurrentPage($pageName);
 
@@ -29,14 +39,14 @@ class PaginationService
             ]
         );
 
-        return PaginationService::format($pagination);
+        return $this->format($pagination);
     }
 
     /**
      * @param LengthAwarePaginator $data
      * @return array
      */
-    private static function format(LengthAwarePaginator $data) :array
+    private function format(LengthAwarePaginator $data) :array
     {
         return [
             'total_results' => $data->total(),
