@@ -57,9 +57,11 @@ class AvailabilityService implements AvailabilityServiceInterface
      */
     public function store(array $request): void
     {
-        $request['user_id']    = auth('api')->user()->getAuthIdentifier();
-        $request['start_date'] = Carbon::parse($request['start_date'])->format(Constants::DATE_FORMAT_MYSQL);
-        $request['end_date']   = Carbon::parse($request['end_date'])->format(Constants::DATE_FORMAT_MYSQL);
+        $request['user_id']                = auth('api')->user()->getAuthIdentifier();
+        $request['start_date']             = Carbon::parse($request['start_date'])->format(Constants::DATE_FORMAT_MYSQL);
+        $request['end_date']               = Carbon::parse($request['end_date'])->format(Constants::DATE_FORMAT_MYSQL);
+        $request['start_date_recurrences'] = Carbon::parse($request['start_date_recurrences'])->format(Constants::DATE_FORMAT_MYSQL);
+        $request['end_date_recurrences']   = Carbon::parse($request['end_date_recurrences'])->format(Constants::DATE_FORMAT_MYSQL);
 
         $this->availabilityRepository->store($request);
     }

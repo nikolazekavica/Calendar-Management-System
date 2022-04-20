@@ -33,8 +33,8 @@ class AvailabilityFactory extends Factory
             'end_time'               => $this->faker->time($dateNow->addMinutes(20)->format('H:i')),
             'availability_status'    => $this->faker->randomElement($array = ['busy','free']),
             'description'            => $this->faker->text(100),
-            'start_date_recurrences' => $this->faker->date($dateNow->addDays(10)),
-            'end_date_recurrences'   => $this->faker->date($dateNow->addDays(15)),
+            'start_date_recurrences' => $this->faker->date($dateNow->addDays(10)->format(Constants::DATE_FORMAT_PROJECT)),
+            'end_date_recurrences'   => $this->faker->date($dateNow->addDays(15)->format(Constants::DATE_FORMAT_PROJECT))
         ];
     }
 }

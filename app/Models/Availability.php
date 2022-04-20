@@ -49,11 +49,6 @@ class Availability extends Model
         'timezone' => 'Europe/Belgrade'
     ];
 
-    protected $dates = [
-        'start_date_recurrences',
-        'end_date_recurrences'
-    ];
-
     protected $hidden = [
         'created_at',
         'updated_at',
