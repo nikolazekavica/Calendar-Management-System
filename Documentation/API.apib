@@ -1,0 +1,686 @@
+# Calendar-Management-System
+
+Calendar Management System REST API.
+
+## Users [/users]
+
+### Registration User [POST /users/register]
+
+### Success
+
++ Request (application/json)
+
+        {
+            "first_name": "test",
+            "last_name": "test",
+            "username" : "test123",
+            "email": "calendarlaraveltest@gmail.com",
+            "password": "Test123!",
+            "role_id": 1
+        }
+
++ Response 201 (application/json)
+
+        {
+            "success": {
+                "data": null,
+                "message": "User successfully registered."
+            }
+        }
+
+### Error
+
++ Request (application/json)
+
+        {
+            "first_name": "test",
+            "last_name": "test",
+            "email": "calendarlaraveltest@gmail.com",
+            "password": "Test123!",
+            "role_id": 1
+        }
++ Response 422 (application/json)
+
+        {
+            "errors": [
+                {
+                    "param": "username",
+                    "message": [
+                        "The username field is required."
+                    ]
+                },
+                {
+                    "param": "email",
+                    "message": [
+                        "The email has already been taken."
+                    ]
+                }
+            ]
+        }
+
+### Verify User [GET /users/verify?code=]
+
+### Success
+
++ Parameters
+    + code
+
++ Response 200 (application/json)
+
+        {
+            "success": {
+                "data":null,
+                "message":"Verification successfully finished."
+             }
+        }
+
+### Error
+
++ Parameters
+    + code
+
++ Response 400 (application/json)
+
+        {
+            "errors": {
+                "message":"Verification link is not valid."
+             }
+        }
+
+### Login User [POST /users/login]
+
+### Success
+
++ Request (application/json)
+
+        {
+            "email": "calendarlaraveltest@gmail.com",
+            "password": "Test123!"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "token_type": "Bearer",
+            "expires_in": 863999,
+            "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5NjFiYzJhZC1iZDI1LTRiNmItOWUxOS0zYzRmZWZlZWMxMDEiLCJqdGkiOiJhMWE4MTBkMmQwMGQzYzU5NWExOGMzN2RmNjZjNjMwMzEwYjM1ZDUwMTlkODM2OWMxODExZTY1Zjc1YjZhMDQ2Y2Q1NjI3NTRkNDY1YjRmMiIsImlhdCI6MTY1MDQ2NjEwMS4xNzI0NDMsIm5iZiI6MTY1MDQ2NjEwMS4xNzI0NSwiZXhwIjoxNjUxMzMwMTAwLjgyMTQ1NSwic3ViIjoiMiIsInNjb3BlcyI6WyJyZWd1bGFyIl19.T6OLUsXnuuGWEdcqCCXgbC8t3kePytWwl8064ilNaF2kOZ2ttLzT8fKnvi9MCOgEaHCW4If7N_1J0jHbQ5UHnYosszM87eqjXHdAbFuWA_TOjFiIfMtMPstNpTQnyloSQ3FcStBAPmKW-NbYbGtDgohExNMPQogOREeujdGUJAOZukIaR9SdxYAnhLQo6PH2eAVM3cy2kMPRH36qumI6pgYA6GWBSs3uDGnqlJ1C9UBzrGX18LlLqqWN_i4HLjXDwiY90r6aO98VR6ViJYXayCVUw5syYW12BbYNR8-o2gSadZTzpkk5-OjhtIqF70YGOFAX4BOvXLBYJybtgYbIAwHLLHEV4-YcGQ27lQHADxloyIJhC_PEUHxtDYxDMs_Z9qWv1X7D74KVv5nWM83cyffUfstki8OaZjkgHbiQkOtAjH3PVFfNywnNwVPI-rHXgkdK6xgEwr8_W-WMbaRZLM9-dgDLlHhUbVf1EkM7eX5UQSbSaqdyKlyprdgf_q723GAWEPkrGUOBX1p8AjeZKlsYRna19bA5m7H6kmXlqJ84ZUhHbJLoBl7v3KlzAAIBRBA0CAHdpYJJh0wSjszmtD-2nJHBxxjTGMN7zy_VH6Nn20dGBt4D9no3YjU-kKLTILj_BtuBvoJc0T5uUe_lL30hNHjGQ_3HG2UaUVhhXR4",
+            "refresh_token": "def502003e9c88d83bb74416d42e5afed73ef0723095a21d47e2c225868eb7f1d73144d549c406db422dbb4326029a3884a16f17629e58963a1635bd910b98a96e6176cd491d4bdb2b55d2a46288ecc9e3ae13ed64984a19894e806192c917a8eb59c81a7a0810a2693fdcef5f04ec67c3f19fa5a02321ceff218a455135496ebe86d82622cf74acd6dcb2661db905cafbb8dd48f39e0b6e27c3c0918736866f06b47ee14893083dffdc0cd90c2805c1b542a6b6fca6805ec6cda24072b81d46d1dadc07d80bfe2b1f4ead5b5f3a889545e175eb6cce996f06c0ed4f6ac0ebbcdc96d548c119716849787cb48d9e6e5827af17fa8a3205b264a8e969b415817dac863e49e84d1fdebc56e8de987d6a7c6e4cd6033d8fa2ac188e44c00a10cde43b5850d54f802c8a97229ea0636991c3487c317b045345a75277f0eeb89799d5c7d327d23d73392f6a4ab037fafa5ad9d55253c6ffc630d7fe0403c7a2695bdab0de900c85c8a5f632602e77fd36693d7f4b5c465cd8498f7f47ee0223278006fd4bdd337330e968bec7ea820d"
+        }
+
+### Error
+
++ Request (application/json)
+
+        {
+            "email": "test@gmail.com",
+            "password": "Test123!"
+        }
+
++ Response 422 (application/json)
+        {
+            "errors": [
+                {
+                    "param": "email",
+                    "message": [
+                         "Email does not exist."
+                    ]
+                }
+            ]
+        }
+
+### Login User [POST /users/logout]
+
+### Success
+
++ Parameters
+    + Headers
+
+        Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5NjFiYzJhZC1iZDI1LTRiNmItOWUxOS0zYzRmZWZlZWMxMDEiLCJqdGkiOiI1Yjc0ZGI4MmM2NmU5ZjA0ZWRiMWYzZmZmZWZkZjZmM2Y2NGM1ZDE1NDFlZGJmNDFlNGIxNTgzNTlkOGVmNmEwMTQ3ZGNmMjQ0ZjM3YWQ2YSIsImlhdCI6MTY1MDQ2NjUyNi43NzI2MzksIm5iZiI6MTY1MDQ2NjUyNi43NzI2NDUsImV4cCI6MTY1MTMzMDUyNi41MDYxMjIsInN1YiI6IjIiLCJzY29wZXMiOlsicmVndWxhciJdfQ.GETlVPJjxmU8oF5UkhJUkGJTrDpBvNGifN8RouYxM5iOR70byjAv4u5xj_1Ginc6ziR5IrVkMWcu9V62bRtrfi764_Dt4XiayLfCnLE5XV6dxNdX_4klK3f57yQ07u3S8d3M7hJOTH-q626jp6y5B1JF7FOw_GhsktoMdSLkkS4TWn2PC6EYIJ2Cy37k_dDUB_vgNC-ZRvvlwXKS0x_TZRJEQ--6tnZnjxn4G90dF7yUvymqzlXAhVvgzekkupEblVasXCzljGHJwlyuXi048loJ7GOUtcUONskf43vgU9Awj-hoy-4cVu_B46F81dqRcVrBcNYL9Ub2Nv-wYF4eF0X3s5KpRQzo4aQiZmvL5RJx-_gdjSoQ4MlCJE5hXbEzWqvbkhOw0eQphXK8Flr-IlMGgxZZ942Ksx9KMH4pe-HjkZ-xS2FVIcml_6RUws1X86ACYg3AiEfgUkNGUCFZgvL-NuUbv-IEJgo7ax95c1Uzj6Rshxc-5H1DLNjjhAj0ww2XN4FnloyqUWqgWzXnzuxk9OkHsI1KKc1bEofp7hjHLJgE6QibZs7kMvqzC4rG17gp1gv95W3lp-eEynTOEmo-KgMX0WkadBlW51xkPLphQ9LuK6yghPtbHys-LNT4tnlLMCogr9BcVn9NYu0s8FVmtBzz3aRxyATqCEET4Js
+
++ Response 200 (application/json)
+
+        {
+            "success": {
+                "data":null,
+                "message":"User successfully logout."
+             }
+        }
+
+### Error
+
++ Parameters
+    + Headers
+
+        Authorization:
+
++ Response 401 (application/json)
+
+        {
+            "errors": {
+                "message":"User not authenticate."
+             }
+        }
+
+### Roles [GET /users/roles]
+
+### Success
+
++ Parameters
+    + Headers
+
+        Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5NjFiYzJhZC1iZDI1LTRiNmItOWUxOS0zYzRmZWZlZWMxMDEiLCJqdGkiOiI1Yjc0ZGI4MmM2NmU5ZjA0ZWRiMWYzZmZmZWZkZjZmM2Y2NGM1ZDE1NDFlZGJmNDFlNGIxNTgzNTlkOGVmNmEwMTQ3ZGNmMjQ0ZjM3YWQ2YSIsImlhdCI6MTY1MDQ2NjUyNi43NzI2MzksIm5iZiI6MTY1MDQ2NjUyNi43NzI2NDUsImV4cCI6MTY1MTMzMDUyNi41MDYxMjIsInN1YiI6IjIiLCJzY29wZXMiOlsicmVndWxhciJdfQ.GETlVPJjxmU8oF5UkhJUkGJTrDpBvNGifN8RouYxM5iOR70byjAv4u5xj_1Ginc6ziR5IrVkMWcu9V62bRtrfi764_Dt4XiayLfCnLE5XV6dxNdX_4klK3f57yQ07u3S8d3M7hJOTH-q626jp6y5B1JF7FOw_GhsktoMdSLkkS4TWn2PC6EYIJ2Cy37k_dDUB_vgNC-ZRvvlwXKS0x_TZRJEQ--6tnZnjxn4G90dF7yUvymqzlXAhVvgzekkupEblVasXCzljGHJwlyuXi048loJ7GOUtcUONskf43vgU9Awj-hoy-4cVu_B46F81dqRcVrBcNYL9Ub2Nv-wYF4eF0X3s5KpRQzo4aQiZmvL5RJx-_gdjSoQ4MlCJE5hXbEzWqvbkhOw0eQphXK8Flr-IlMGgxZZ942Ksx9KMH4pe-HjkZ-xS2FVIcml_6RUws1X86ACYg3AiEfgUkNGUCFZgvL-NuUbv-IEJgo7ax95c1Uzj6Rshxc-5H1DLNjjhAj0ww2XN4FnloyqUWqgWzXnzuxk9OkHsI1KKc1bEofp7hjHLJgE6QibZs7kMvqzC4rG17gp1gv95W3lp-eEynTOEmo-KgMX0WkadBlW51xkPLphQ9LuK6yghPtbHys-LNT4tnlLMCogr9BcVn9NYu0s8FVmtBzz3aRxyATqCEET4Js
+
++ Response 200 (application/json)
+
+        {
+            "success": {
+                "data": [
+                    {
+                        "id": 1,
+                        "name": "regular"
+                    },
+                    {
+                        "id": 2,
+                        "name": "admin"
+                    }
+                ],
+                "message": "Roles successfully returned."
+            }
+        }
+
+### Error
+
++ Parameters
+    + Headers
+
+        Authorization:
+
++ Response 401 (application/json)
+
+        {
+            "errors": {
+                "message":"User not authenticate."
+             }
+        }
+
+
+### Get availabilities for login user [GET users/{id}/availabilities]
+
+
+### Success
+
++ Parameters
+    + id
+    + Headers
+
+        Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5NjFiYzJhZC1iZDI1LTRiNmItOWUxOS0zYzRmZWZlZWMxMDEiLCJqdGkiOiI1Yjc0ZGI4MmM2NmU5ZjA0ZWRiMWYzZmZmZWZkZjZmM2Y2NGM1ZDE1NDFlZGJmNDFlNGIxNTgzNTlkOGVmNmEwMTQ3ZGNmMjQ0ZjM3YWQ2YSIsImlhdCI6MTY1MDQ2NjUyNi43NzI2MzksIm5iZiI6MTY1MDQ2NjUyNi43NzI2NDUsImV4cCI6MTY1MTMzMDUyNi41MDYxMjIsInN1YiI6IjIiLCJzY29wZXMiOlsicmVndWxhciJdfQ.GETlVPJjxmU8oF5UkhJUkGJTrDpBvNGifN8RouYxM5iOR70byjAv4u5xj_1Ginc6ziR5IrVkMWcu9V62bRtrfi764_Dt4XiayLfCnLE5XV6dxNdX_4klK3f57yQ07u3S8d3M7hJOTH-q626jp6y5B1JF7FOw_GhsktoMdSLkkS4TWn2PC6EYIJ2Cy37k_dDUB_vgNC-ZRvvlwXKS0x_TZRJEQ--6tnZnjxn4G90dF7yUvymqzlXAhVvgzekkupEblVasXCzljGHJwlyuXi048loJ7GOUtcUONskf43vgU9Awj-hoy-4cVu_B46F81dqRcVrBcNYL9Ub2Nv-wYF4eF0X3s5KpRQzo4aQiZmvL5RJx-_gdjSoQ4MlCJE5hXbEzWqvbkhOw0eQphXK8Flr-IlMGgxZZ942Ksx9KMH4pe-HjkZ-xS2FVIcml_6RUws1X86ACYg3AiEfgUkNGUCFZgvL-NuUbv-IEJgo7ax95c1Uzj6Rshxc-5H1DLNjjhAj0ww2XN4FnloyqUWqgWzXnzuxk9OkHsI1KKc1bEofp7hjHLJgE6QibZs7kMvqzC4rG17gp1gv95W3lp-eEynTOEmo-KgMX0WkadBlW51xkPLphQ9LuK6yghPtbHys-LNT4tnlLMCogr9BcVn9NYu0s8FVmtBzz3aRxyATqCEET4Js
+
++ Response 200 (application/json)
+
+        {
+            "success": {
+                "data": {
+                    "total_results": 1,
+                    "current_page": 1,
+                    "from": 1,
+                    "to": 1,
+                    "per_page": 10,
+                    "next_page_url": null,
+                    "prev_page_url": null,
+                    "items": [
+                        {
+                            "id": 1,
+                            "title": "dsdsdsdsda",
+                            "start_time": "08:00",
+                            "end_time": "08:10",
+                            "availability_status": "busy",
+                            "timezone": "Europe/Belgrade",
+                            "description": "aadsadsas",
+                            "period": {
+                                "total_results": 2,
+                                "current_page": 1,
+                                "from": 1,
+                                "to": 2,
+                                "per_page": 10,
+                                "next_page_url": null,
+                                "prev_page_url": null,
+                                "items": [
+                                    "01-05-2022",
+                                    "02-05-2022"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                "message": "Availabilities successfully returned."
+            }
+        }
+
+### Error
+
++ Parameters
+    + id
+    + Headers
+
+        Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5NjFiYzJhZC1iZDI1LTRiNmItOWUxOS0zYzRmZWZlZWMxMDEiLCJqdGkiOiI1Yjc0ZGI4MmM2NmU5ZjA0ZWRiMWYzZmZmZWZkZjZmM2Y2NGM1ZDE1NDFlZGJmNDFlNGIxNTgzNTlkOGVmNmEwMTQ3ZGNmMjQ0ZjM3YWQ2YSIsImlhdCI6MTY1MDQ2NjUyNi43NzI2MzksIm5iZiI6MTY1MDQ2NjUyNi43NzI2NDUsImV4cCI6MTY1MTMzMDUyNi41MDYxMjIsInN1YiI6IjIiLCJzY29wZXMiOlsicmVndWxhciJdfQ.GETlVPJjxmU8oF5UkhJUkGJTrDpBvNGifN8RouYxM5iOR70byjAv4u5xj_1Ginc6ziR5IrVkMWcu9V62bRtrfi764_Dt4XiayLfCnLE5XV6dxNdX_4klK3f57yQ07u3S8d3M7hJOTH-q626jp6y5B1JF7FOw_GhsktoMdSLkkS4TWn2PC6EYIJ2Cy37k_dDUB_vgNC-ZRvvlwXKS0x_TZRJEQ--6tnZnjxn4G90dF7yUvymqzlXAhVvgzekkupEblVasXCzljGHJwlyuXi048loJ7GOUtcUONskf43vgU9Awj-hoy-4cVu_B46F81dqRcVrBcNYL9Ub2Nv-wYF4eF0X3s5KpRQzo4aQiZmvL5RJx-_gdjSoQ4MlCJE5hXbEzWqvbkhOw0eQphXK8Flr-IlMGgxZZ942Ksx9KMH4pe-HjkZ-xS2FVIcml_6RUws1X86ACYg3AiEfgUkNGUCFZgvL-NuUbv-IEJgo7ax95c1Uzj6Rshxc-5H1DLNjjhAj0ww2XN4FnloyqUWqgWzXnzuxk9OkHsI1KKc1bEofp7hjHLJgE6QibZs7kMvqzC4rG17gp1gv95W3lp-eEynTOEmo-KgMX0WkadBlW51xkPLphQ9LuK6yghPtbHys-LNT4tnlLMCogr9BcVn9NYu0s8FVmtBzz3aRxyATqCEET4Js
+
++ Response 403 (application/json)
+
+        {
+            "errors": {
+                "message": "User dont have permission for this action."
+            }
+        }
+
+### Get all availabilities filtered by user params.Only admin. [GET users/filter/availabilities?username=test123&email=test@gmail.com]
+
++ Parameters
+    + username
+    + email
+    + Headers
+
+        Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5NjFiYzJhZC1iZDI1LTRiNmItOWUxOS0zYzRmZWZlZWMxMDEiLCJqdGkiOiI1Yjc0ZGI4MmM2NmU5ZjA0ZWRiMWYzZmZmZWZkZjZmM2Y2NGM1ZDE1NDFlZGJmNDFlNGIxNTgzNTlkOGVmNmEwMTQ3ZGNmMjQ0ZjM3YWQ2YSIsImlhdCI6MTY1MDQ2NjUyNi43NzI2MzksIm5iZiI6MTY1MDQ2NjUyNi43NzI2NDUsImV4cCI6MTY1MTMzMDUyNi41MDYxMjIsInN1YiI6IjIiLCJzY29wZXMiOlsicmVndWxhciJdfQ.GETlVPJjxmU8oF5UkhJUkGJTrDpBvNGifN8RouYxM5iOR70byjAv4u5xj_1Ginc6ziR5IrVkMWcu9V62bRtrfi764_Dt4XiayLfCnLE5XV6dxNdX_4klK3f57yQ07u3S8d3M7hJOTH-q626jp6y5B1JF7FOw_GhsktoMdSLkkS4TWn2PC6EYIJ2Cy37k_dDUB_vgNC-ZRvvlwXKS0x_TZRJEQ--6tnZnjxn4G90dF7yUvymqzlXAhVvgzekkupEblVasXCzljGHJwlyuXi048loJ7GOUtcUONskf43vgU9Awj-hoy-4cVu_B46F81dqRcVrBcNYL9Ub2Nv-wYF4eF0X3s5KpRQzo4aQiZmvL5RJx-_gdjSoQ4MlCJE5hXbEzWqvbkhOw0eQphXK8Flr-IlMGgxZZ942Ksx9KMH4pe-HjkZ-xS2FVIcml_6RUws1X86ACYg3AiEfgUkNGUCFZgvL-NuUbv-IEJgo7ax95c1Uzj6Rshxc-5H1DLNjjhAj0ww2XN4FnloyqUWqgWzXnzuxk9OkHsI1KKc1bEofp7hjHLJgE6QibZs7kMvqzC4rG17gp1gv95W3lp-eEynTOEmo-KgMX0WkadBlW51xkPLphQ9LuK6yghPtbHys-LNT4tnlLMCogr9BcVn9NYu0s8FVmtBzz3aRxyATqCEET4Js
+
+### Success
+
++ Response 200 (application/json)
+
+        {
+            "success": {
+                "data": {
+                    "total_results": 1,
+                    "current_page": 1,
+                    "from": 1,
+                    "to": 1,
+                    "per_page": 10,
+                    "next_page_url": null,
+                    "prev_page_url": null,
+                    "items": [
+                        {
+                            "id": 1,
+                            "title": "dsdsdsdsda",
+                            "start_time": "08:00",
+                            "end_time": "08:10",
+                            "availability_status": "busy",
+                            "timezone": "Europe/Belgrade",
+                            "description": "aadsadsas",
+                            "period": {
+                                "total_results": 2,
+                                "current_page": 1,
+                                "from": 1,
+                                "to": 2,
+                                "per_page": 10,
+                                "next_page_url": null,
+                                "prev_page_url": null,
+                                "items": [
+                                    "01-05-2022",
+                                    "02-05-2022"
+                                ]
+                            },
+                            "user": {
+                                "id": 2,
+                                "first_name": "test",
+                                "last_name": "test",
+                                "username": "test123",
+                                "email": "calendarlaraveltest@gmail.com"
+                            }
+                        }
+                    ]
+                },
+                "message": "Availabilities successfully returned."
+            }
+        }
+
+### Error
+
++ Parameters
+    + username
+    + email
+    + password
+    + Headers
+
+        Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5NjFiYzJhZC1iZDI1LTRiNmItOWUxOS0zYzRmZWZlZWMxMDEiLCJqdGkiOiI1Yjc0ZGI4MmM2NmU5ZjA0ZWRiMWYzZmZmZWZkZjZmM2Y2NGM1ZDE1NDFlZGJmNDFlNGIxNTgzNTlkOGVmNmEwMTQ3ZGNmMjQ0ZjM3YWQ2YSIsImlhdCI6MTY1MDQ2NjUyNi43NzI2MzksIm5iZiI6MTY1MDQ2NjUyNi43NzI2NDUsImV4cCI6MTY1MTMzMDUyNi41MDYxMjIsInN1YiI6IjIiLCJzY29wZXMiOlsicmVndWxhciJdfQ.GETlVPJjxmU8oF5UkhJUkGJTrDpBvNGifN8RouYxM5iOR70byjAv4u5xj_1Ginc6ziR5IrVkMWcu9V62bRtrfi764_Dt4XiayLfCnLE5XV6dxNdX_4klK3f57yQ07u3S8d3M7hJOTH-q626jp6y5B1JF7FOw_GhsktoMdSLkkS4TWn2PC6EYIJ2Cy37k_dDUB_vgNC-ZRvvlwXKS0x_TZRJEQ--6tnZnjxn4G90dF7yUvymqzlXAhVvgzekkupEblVasXCzljGHJwlyuXi048loJ7GOUtcUONskf43vgU9Awj-hoy-4cVu_B46F81dqRcVrBcNYL9Ub2Nv-wYF4eF0X3s5KpRQzo4aQiZmvL5RJx-_gdjSoQ4MlCJE5hXbEzWqvbkhOw0eQphXK8Flr-IlMGgxZZ942Ksx9KMH4pe-HjkZ-xS2FVIcml_6RUws1X86ACYg3AiEfgUkNGUCFZgvL-NuUbv-IEJgo7ax95c1Uzj6Rshxc-5H1DLNjjhAj0ww2XN4FnloyqUWqgWzXnzuxk9OkHsI1KKc1bEofp7hjHLJgE6QibZs7kMvqzC4rG17gp1gv95W3lp-eEynTOEmo-KgMX0WkadBlW51xkPLphQ9LuK6yghPtbHys-LNT4tnlLMCogr9BcVn9NYu0s8FVmtBzz3aRxyATqCEET4Js
+
++ Response 422 (application/json)
+
+        {
+            "errors": [
+                {
+                    "param": "password",
+                    "message": [
+                        "Forbidden. Allowed params: first_name, last_name, username, email."
+                    ]
+                }
+            ]
+        }
+
+
+
+## Availability [/availabilities]
+
+### Store availability. Only regular user [POST /availabilities]
+
+### Success
+
++ Parameters
+    + Headers
+
+        Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5NjFiYzJhZC1iZDI1LTRiNmItOWUxOS0zYzRmZWZlZWMxMDEiLCJqdGkiOiI1Yjc0ZGI4MmM2NmU5ZjA0ZWRiMWYzZmZmZWZkZjZmM2Y2NGM1ZDE1NDFlZGJmNDFlNGIxNTgzNTlkOGVmNmEwMTQ3ZGNmMjQ0ZjM3YWQ2YSIsImlhdCI6MTY1MDQ2NjUyNi43NzI2MzksIm5iZiI6MTY1MDQ2NjUyNi43NzI2NDUsImV4cCI6MTY1MTMzMDUyNi41MDYxMjIsInN1YiI6IjIiLCJzY29wZXMiOlsicmVndWxhciJdfQ.GETlVPJjxmU8oF5UkhJUkGJTrDpBvNGifN8RouYxM5iOR70byjAv4u5xj_1Ginc6ziR5IrVkMWcu9V62bRtrfi764_Dt4XiayLfCnLE5XV6dxNdX_4klK3f57yQ07u3S8d3M7hJOTH-q626jp6y5B1JF7FOw_GhsktoMdSLkkS4TWn2PC6EYIJ2Cy37k_dDUB_vgNC-ZRvvlwXKS0x_TZRJEQ--6tnZnjxn4G90dF7yUvymqzlXAhVvgzekkupEblVasXCzljGHJwlyuXi048loJ7GOUtcUONskf43vgU9Awj-hoy-4cVu_B46F81dqRcVrBcNYL9Ub2Nv-wYF4eF0X3s5KpRQzo4aQiZmvL5RJx-_gdjSoQ4MlCJE5hXbEzWqvbkhOw0eQphXK8Flr-IlMGgxZZ942Ksx9KMH4pe-HjkZ-xS2FVIcml_6RUws1X86ACYg3AiEfgUkNGUCFZgvL-NuUbv-IEJgo7ax95c1Uzj6Rshxc-5H1DLNjjhAj0ww2XN4FnloyqUWqgWzXnzuxk9OkHsI1KKc1bEofp7hjHLJgE6QibZs7kMvqzC4rG17gp1gv95W3lp-eEynTOEmo-KgMX0WkadBlW51xkPLphQ9LuK6yghPtbHys-LNT4tnlLMCogr9BcVn9NYu0s8FVmtBzz3aRxyATqCEET4Js
+
++ Request (application/json)
+
+        {
+            "title": "dsdsdsdsda",
+            "start_date": "01-05-2022",
+            "end_date" : "02-05-2022",
+            "start_time": "08:00",
+            "end_time": "08:10",
+            "availability_status": "busy",
+            "description": "aadsadsas",
+            "is_recurrences": true,
+            "start_date_recurrences":"2022-05-25",
+            "end_date_recurrences":"2022-06-30"
+        }
+
++ Response 201 (application/json)
+
+        {
+            "success": {
+                "data": null,
+                "message": "Availability successfully inserted."
+            }
+        }
+
+### Error
+
++ Parameters
+    + Headers
+
+        Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5NjFiYzJhZC1iZDI1LTRiNmItOWUxOS0zYzRmZWZlZWMxMDEiLCJqdGkiOiI1Yjc0ZGI4MmM2NmU5ZjA0ZWRiMWYzZmZmZWZkZjZmM2Y2NGM1ZDE1NDFlZGJmNDFlNGIxNTgzNTlkOGVmNmEwMTQ3ZGNmMjQ0ZjM3YWQ2YSIsImlhdCI6MTY1MDQ2NjUyNi43NzI2MzksIm5iZiI6MTY1MDQ2NjUyNi43NzI2NDUsImV4cCI6MTY1MTMzMDUyNi41MDYxMjIsInN1YiI6IjIiLCJzY29wZXMiOlsicmVndWxhciJdfQ.GETlVPJjxmU8oF5UkhJUkGJTrDpBvNGifN8RouYxM5iOR70byjAv4u5xj_1Ginc6ziR5IrVkMWcu9V62bRtrfi764_Dt4XiayLfCnLE5XV6dxNdX_4klK3f57yQ07u3S8d3M7hJOTH-q626jp6y5B1JF7FOw_GhsktoMdSLkkS4TWn2PC6EYIJ2Cy37k_dDUB_vgNC-ZRvvlwXKS0x_TZRJEQ--6tnZnjxn4G90dF7yUvymqzlXAhVvgzekkupEblVasXCzljGHJwlyuXi048loJ7GOUtcUONskf43vgU9Awj-hoy-4cVu_B46F81dqRcVrBcNYL9Ub2Nv-wYF4eF0X3s5KpRQzo4aQiZmvL5RJx-_gdjSoQ4MlCJE5hXbEzWqvbkhOw0eQphXK8Flr-IlMGgxZZ942Ksx9KMH4pe-HjkZ-xS2FVIcml_6RUws1X86ACYg3AiEfgUkNGUCFZgvL-NuUbv-IEJgo7ax95c1Uzj6Rshxc-5H1DLNjjhAj0ww2XN4FnloyqUWqgWzXnzuxk9OkHsI1KKc1bEofp7hjHLJgE6QibZs7kMvqzC4rG17gp1gv95W3lp-eEynTOEmo-KgMX0WkadBlW51xkPLphQ9LuK6yghPtbHys-LNT4tnlLMCogr9BcVn9NYu0s8FVmtBzz3aRxyATqCEET4Js
+
++ Request (application/json)
+
+        {
+            "start_date": "01-05-2022",
+            "end_date" : "02-05-2022",
+            "start_time": "08:00",
+            "end_time": "08:10",
+            "availability_status": "busy",
+            "description": "aadsadsas",
+            "is_recurrences": true,
+            "start_date_recurrences":"2022-05-25",
+            "end_date_recurrences":"2022-06-30"
+        }
+
++ Response 422 (application/json)
+
+        {
+            "errors": [
+                {
+                    "param": "title",
+                    "message": [
+                        "The title field is required."
+                    ]
+                }
+            ]
+        }
+
+### Error
+
++ Parameters
+    + Headers
+
+        Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5NjFiYzJhZC1iZDI1LTRiNmItOWUxOS0zYzRmZWZlZWMxMDEiLCJqdGkiOiI1Yjc0ZGI4MmM2NmU5ZjA0ZWRiMWYzZmZmZWZkZjZmM2Y2NGM1ZDE1NDFlZGJmNDFlNGIxNTgzNTlkOGVmNmEwMTQ3ZGNmMjQ0ZjM3YWQ2YSIsImlhdCI6MTY1MDQ2NjUyNi43NzI2MzksIm5iZiI6MTY1MDQ2NjUyNi43NzI2NDUsImV4cCI6MTY1MTMzMDUyNi41MDYxMjIsInN1YiI6IjIiLCJzY29wZXMiOlsicmVndWxhciJdfQ.GETlVPJjxmU8oF5UkhJUkGJTrDpBvNGifN8RouYxM5iOR70byjAv4u5xj_1Ginc6ziR5IrVkMWcu9V62bRtrfi764_Dt4XiayLfCnLE5XV6dxNdX_4klK3f57yQ07u3S8d3M7hJOTH-q626jp6y5B1JF7FOw_GhsktoMdSLkkS4TWn2PC6EYIJ2Cy37k_dDUB_vgNC-ZRvvlwXKS0x_TZRJEQ--6tnZnjxn4G90dF7yUvymqzlXAhVvgzekkupEblVasXCzljGHJwlyuXi048loJ7GOUtcUONskf43vgU9Awj-hoy-4cVu_B46F81dqRcVrBcNYL9Ub2Nv-wYF4eF0X3s5KpRQzo4aQiZmvL5RJx-_gdjSoQ4MlCJE5hXbEzWqvbkhOw0eQphXK8Flr-IlMGgxZZ942Ksx9KMH4pe-HjkZ-xS2FVIcml_6RUws1X86ACYg3AiEfgUkNGUCFZgvL-NuUbv-IEJgo7ax95c1Uzj6Rshxc-5H1DLNjjhAj0ww2XN4FnloyqUWqgWzXnzuxk9OkHsI1KKc1bEofp7hjHLJgE6QibZs7kMvqzC4rG17gp1gv95W3lp-eEynTOEmo-KgMX0WkadBlW51xkPLphQ9LuK6yghPtbHys-LNT4tnlLMCogr9BcVn9NYu0s8FVmtBzz3aRxyATqCEET4Js
+
++ Request (application/json)
+
+        {
+            "title": "dsdsdsdsda",
+            "start_date": "01-05-2022",
+            "end_date" : "02-05-2022",
+            "start_time": "08:00",
+            "end_time": "08:10",
+            "availability_status": "busy",
+            "description": "aadsadsas",
+            "is_recurrences": true,
+            "start_date_recurrences":"2022-05-25",
+            "end_date_recurrences":"2022-06-30"
+        }
+
++ Response 422 (application/json)
+
+        {
+            "errors": [
+                {
+                    "param": "is_recurrences",
+                    "message": [
+                        "Multiple recurrences are forbidden for the same user."
+                    ]
+                }
+            ]
+        }
+
+### Get all availabilities. Only admin. [GET /availabilities]
+
+### Success
+
++ Parameters
+    + Headers
+
+        Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5NjFiYzJhZC1iZDI1LTRiNmItOWUxOS0zYzRmZWZlZWMxMDEiLCJqdGkiOiI1Yjc0ZGI4MmM2NmU5ZjA0ZWRiMWYzZmZmZWZkZjZmM2Y2NGM1ZDE1NDFlZGJmNDFlNGIxNTgzNTlkOGVmNmEwMTQ3ZGNmMjQ0ZjM3YWQ2YSIsImlhdCI6MTY1MDQ2NjUyNi43NzI2MzksIm5iZiI6MTY1MDQ2NjUyNi43NzI2NDUsImV4cCI6MTY1MTMzMDUyNi41MDYxMjIsInN1YiI6IjIiLCJzY29wZXMiOlsicmVndWxhciJdfQ.GETlVPJjxmU8oF5UkhJUkGJTrDpBvNGifN8RouYxM5iOR70byjAv4u5xj_1Ginc6ziR5IrVkMWcu9V62bRtrfi764_Dt4XiayLfCnLE5XV6dxNdX_4klK3f57yQ07u3S8d3M7hJOTH-q626jp6y5B1JF7FOw_GhsktoMdSLkkS4TWn2PC6EYIJ2Cy37k_dDUB_vgNC-ZRvvlwXKS0x_TZRJEQ--6tnZnjxn4G90dF7yUvymqzlXAhVvgzekkupEblVasXCzljGHJwlyuXi048loJ7GOUtcUONskf43vgU9Awj-hoy-4cVu_B46F81dqRcVrBcNYL9Ub2Nv-wYF4eF0X3s5KpRQzo4aQiZmvL5RJx-_gdjSoQ4MlCJE5hXbEzWqvbkhOw0eQphXK8Flr-IlMGgxZZ942Ksx9KMH4pe-HjkZ-xS2FVIcml_6RUws1X86ACYg3AiEfgUkNGUCFZgvL-NuUbv-IEJgo7ax95c1Uzj6Rshxc-5H1DLNjjhAj0ww2XN4FnloyqUWqgWzXnzuxk9OkHsI1KKc1bEofp7hjHLJgE6QibZs7kMvqzC4rG17gp1gv95W3lp-eEynTOEmo-KgMX0WkadBlW51xkPLphQ9LuK6yghPtbHys-LNT4tnlLMCogr9BcVn9NYu0s8FVmtBzz3aRxyATqCEET4Js
+
++ Response 200 (application/json)
+
+        {
+            "success": {
+                "data": {
+                    "total_results": 3,
+                    "current_page": 1,
+                    "from": 1,
+                    "to": 3,
+                    "per_page": 10,
+                    "next_page_url": null,
+                    "prev_page_url": null,
+                    "items": [
+                        {
+                            "id": 1,
+                            "title": "dsdsdsdsda",
+                            "start_time": "08:00",
+                            "end_time": "08:10",
+                            "availability_status": "busy",
+                            "timezone": "Europe/Belgrade",
+                            "description": "aadsadsas",
+                            "period": {
+                                "total_results": 2,
+                                "current_page": 1,
+                                "from": 1,
+                                "to": 2,
+                                "per_page": 10,
+                                "next_page_url": null,
+                                "prev_page_url": null,
+                                "items": [
+                                    "01-05-2022",
+                                    "02-05-2022"
+                                ]
+                            },
+                            "user": {
+                                "id": 2,
+                                "first_name": "test",
+                                "last_name": "test",
+                                "username": "test123",
+                                "email": "calendarlaraveltest@gmail.com"
+                            }
+                        },
+                        {
+                            "id": 2,
+                            "title": "dsdsdsdsda",
+                            "start_time": "08:00",
+                            "end_time": "08:10",
+                            "availability_status": "busy",
+                            "timezone": "Europe/Belgrade",
+                            "description": "aadsadsas",
+                            "period": {
+                                "total_results": 2,
+                                "current_page": 1,
+                                "from": 1,
+                                "to": 2,
+                                "per_page": 10,
+                                "next_page_url": null,
+                                "prev_page_url": null,
+                                "items": [
+                                    "01-05-2022",
+                                    "02-05-2022"
+                                ]
+                            },
+                            "user": {
+                                "id": 2,
+                                "first_name": "test",
+                                "last_name": "test",
+                                "username": "test123",
+                                "email": "calendarlaraveltest@gmail.com"
+                            }
+                        },
+                        {
+                            "id": 3,
+                            "title": "dsdsdsdsda",
+                            "start_time": "08:00",
+                            "end_time": "08:10",
+                            "availability_status": "busy",
+                            "timezone": "Europe/Belgrade",
+                            "description": "aadsadsas",
+                            "period": {
+                                "total_results": 12,
+                                "current_page": 1,
+                                "from": 1,
+                                "to": 10,
+                                "per_page": 10,
+                                "next_page_url": "http://localhost/api/availabilities?period_3_page=2",
+                                "prev_page_url": null,
+                                "items": [
+                                    "01-05-2022",
+                                    "29-05-2022",
+                                    "05-06-2022",
+                                    "12-06-2022",
+                                    "19-06-2022",
+                                    "26-06-2022",
+                                    "02-05-2022",
+                                    "30-05-2022",
+                                    "06-06-2022",
+                                    "13-06-2022"
+                                ]
+                            },
+                            "user": {
+                                "id": 2,
+                                "first_name": "test",
+                                "last_name": "test",
+                                "username": "test123",
+                                "email": "calendarlaraveltest@gmail.com"
+                            }
+                        }
+                    ]
+                },
+                "message": "Availabilities successfully returned."
+            }
+        }
+
+### Error
+
++ Parameters
+    + Headers
+
+        Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5NjFiYzJhZC1iZDI1LTRiNmItOWUxOS0zYzRmZWZlZWMxMDEiLCJqdGkiOiI1Yjc0ZGI4MmM2NmU5ZjA0ZWRiMWYzZmZmZWZkZjZmM2Y2NGM1ZDE1NDFlZGJmNDFlNGIxNTgzNTlkOGVmNmEwMTQ3ZGNmMjQ0ZjM3YWQ2YSIsImlhdCI6MTY1MDQ2NjUyNi43NzI2MzksIm5iZiI6MTY1MDQ2NjUyNi43NzI2NDUsImV4cCI6MTY1MTMzMDUyNi41MDYxMjIsInN1YiI6IjIiLCJzY29wZXMiOlsicmVndWxhciJdfQ.GETlVPJjxmU8oF5UkhJUkGJTrDpBvNGifN8RouYxM5iOR70byjAv4u5xj_1Ginc6ziR5IrVkMWcu9V62bRtrfi764_Dt4XiayLfCnLE5XV6dxNdX_4klK3f57yQ07u3S8d3M7hJOTH-q626jp6y5B1JF7FOw_GhsktoMdSLkkS4TWn2PC6EYIJ2Cy37k_dDUB_vgNC-ZRvvlwXKS0x_TZRJEQ--6tnZnjxn4G90dF7yUvymqzlXAhVvgzekkupEblVasXCzljGHJwlyuXi048loJ7GOUtcUONskf43vgU9Awj-hoy-4cVu_B46F81dqRcVrBcNYL9Ub2Nv-wYF4eF0X3s5KpRQzo4aQiZmvL5RJx-_gdjSoQ4MlCJE5hXbEzWqvbkhOw0eQphXK8Flr-IlMGgxZZ942Ksx9KMH4pe-HjkZ-xS2FVIcml_6RUws1X86ACYg3AiEfgUkNGUCFZgvL-NuUbv-IEJgo7ax95c1Uzj6Rshxc-5H1DLNjjhAj0ww2XN4FnloyqUWqgWzXnzuxk9OkHsI1KKc1bEofp7hjHLJgE6QibZs7kMvqzC4rG17gp1gv95W3lp-eEynTOEmo-KgMX0WkadBlW51xkPLphQ9LuK6yghPtbHys-LNT4tnlLMCogr9BcVn9NYu0s8FVmtBzz3aRxyATqCEET4Js
+
++ Response 403 (application/json)
+
+        {
+            "errors": {
+                "message": "User dont have permission for this action."
+            }
+        }
+
+### Get all availabilities by date range. Only admin. [GET /availabilities/filter?start_date=25-5-2022&end_date=21-6-2022]
+
+### Success
+
++ Parameters
+    + start_date
+    + end_date
+    + Headers
+
+        Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5NjFiYzJhZC1iZDI1LTRiNmItOWUxOS0zYzRmZWZlZWMxMDEiLCJqdGkiOiI1Yjc0ZGI4MmM2NmU5ZjA0ZWRiMWYzZmZmZWZkZjZmM2Y2NGM1ZDE1NDFlZGJmNDFlNGIxNTgzNTlkOGVmNmEwMTQ3ZGNmMjQ0ZjM3YWQ2YSIsImlhdCI6MTY1MDQ2NjUyNi43NzI2MzksIm5iZiI6MTY1MDQ2NjUyNi43NzI2NDUsImV4cCI6MTY1MTMzMDUyNi41MDYxMjIsInN1YiI6IjIiLCJzY29wZXMiOlsicmVndWxhciJdfQ.GETlVPJjxmU8oF5UkhJUkGJTrDpBvNGifN8RouYxM5iOR70byjAv4u5xj_1Ginc6ziR5IrVkMWcu9V62bRtrfi764_Dt4XiayLfCnLE5XV6dxNdX_4klK3f57yQ07u3S8d3M7hJOTH-q626jp6y5B1JF7FOw_GhsktoMdSLkkS4TWn2PC6EYIJ2Cy37k_dDUB_vgNC-ZRvvlwXKS0x_TZRJEQ--6tnZnjxn4G90dF7yUvymqzlXAhVvgzekkupEblVasXCzljGHJwlyuXi048loJ7GOUtcUONskf43vgU9Awj-hoy-4cVu_B46F81dqRcVrBcNYL9Ub2Nv-wYF4eF0X3s5KpRQzo4aQiZmvL5RJx-_gdjSoQ4MlCJE5hXbEzWqvbkhOw0eQphXK8Flr-IlMGgxZZ942Ksx9KMH4pe-HjkZ-xS2FVIcml_6RUws1X86ACYg3AiEfgUkNGUCFZgvL-NuUbv-IEJgo7ax95c1Uzj6Rshxc-5H1DLNjjhAj0ww2XN4FnloyqUWqgWzXnzuxk9OkHsI1KKc1bEofp7hjHLJgE6QibZs7kMvqzC4rG17gp1gv95W3lp-eEynTOEmo-KgMX0WkadBlW51xkPLphQ9LuK6yghPtbHys-LNT4tnlLMCogr9BcVn9NYu0s8FVmtBzz3aRxyATqCEET4Js
+
++ Response 200 (application/json)
+
+        {
+            "success": {
+                "data": {
+                    "total_results": 1,
+                    "current_page": 1,
+                    "from": 1,
+                    "to": 1,
+                    "per_page": 10,
+                    "next_page_url": null,
+                    "prev_page_url": null,
+                    "items": [
+                        {
+                            "id": 3,
+                            "title": "dsdsdsdsda",
+                            "start_time": "08:00",
+                            "end_time": "08:10",
+                            "availability_status": "busy",
+                            "timezone": "Europe/Belgrade",
+                            "description": "aadsadsas",
+                            "period": {
+                                "total_results": 8,
+                                "current_page": 1,
+                                "from": 1,
+                                "to": 8,
+                                "per_page": 10,
+                                "next_page_url": null,
+                                "prev_page_url": null,
+                                "items": [
+                                    "29-05-2022",
+                                    "05-06-2022",
+                                    "12-06-2022",
+                                    "19-06-2022",
+                                    "30-05-2022",
+                                    "06-06-2022",
+                                    "13-06-2022",
+                                    "20-06-2022"
+                                ]
+                            },
+                            "user": {
+                                "id": 2,
+                                "first_name": "test",
+                                "last_name": "test",
+                                "username": "test123",
+                                "email": "calendarlaraveltest@gmail.com"
+                            }
+                        }
+                    ]
+                },
+                "message": "Availabilities successfully returned."
+            }
+        }
+
+### Error
+
++ Parameters
+    + start_date
+    + end_date
+    + Headers
+
+        Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5NjFiYzJhZC1iZDI1LTRiNmItOWUxOS0zYzRmZWZlZWMxMDEiLCJqdGkiOiI1Yjc0ZGI4MmM2NmU5ZjA0ZWRiMWYzZmZmZWZkZjZmM2Y2NGM1ZDE1NDFlZGJmNDFlNGIxNTgzNTlkOGVmNmEwMTQ3ZGNmMjQ0ZjM3YWQ2YSIsImlhdCI6MTY1MDQ2NjUyNi43NzI2MzksIm5iZiI6MTY1MDQ2NjUyNi43NzI2NDUsImV4cCI6MTY1MTMzMDUyNi41MDYxMjIsInN1YiI6IjIiLCJzY29wZXMiOlsicmVndWxhciJdfQ.GETlVPJjxmU8oF5UkhJUkGJTrDpBvNGifN8RouYxM5iOR70byjAv4u5xj_1Ginc6ziR5IrVkMWcu9V62bRtrfi764_Dt4XiayLfCnLE5XV6dxNdX_4klK3f57yQ07u3S8d3M7hJOTH-q626jp6y5B1JF7FOw_GhsktoMdSLkkS4TWn2PC6EYIJ2Cy37k_dDUB_vgNC-ZRvvlwXKS0x_TZRJEQ--6tnZnjxn4G90dF7yUvymqzlXAhVvgzekkupEblVasXCzljGHJwlyuXi048loJ7GOUtcUONskf43vgU9Awj-hoy-4cVu_B46F81dqRcVrBcNYL9Ub2Nv-wYF4eF0X3s5KpRQzo4aQiZmvL5RJx-_gdjSoQ4MlCJE5hXbEzWqvbkhOw0eQphXK8Flr-IlMGgxZZ942Ksx9KMH4pe-HjkZ-xS2FVIcml_6RUws1X86ACYg3AiEfgUkNGUCFZgvL-NuUbv-IEJgo7ax95c1Uzj6Rshxc-5H1DLNjjhAj0ww2XN4FnloyqUWqgWzXnzuxk9OkHsI1KKc1bEofp7hjHLJgE6QibZs7kMvqzC4rG17gp1gv95W3lp-eEynTOEmo-KgMX0WkadBlW51xkPLphQ9LuK6yghPtbHys-LNT4tnlLMCogr9BcVn9NYu0s8FVmtBzz3aRxyATqCEET4Js
+
++ Response 422 (application/json)
+
+        {
+            "errors": [
+                {
+                    "param": "end_date",
+                    "message": [
+                        "Range time must be less than 30 days"
+                    ]
+                }
+            ]
+        }

@@ -1,0 +1,26 @@
+Language: PHP 8.0.16 
+Database: MySql 8.0.28
+Framework: Laravel 9.2
+
+DATABASE:
+
+DB_CONNECTION=mysql
+DB_HOST=host.docker.internal
+DB_PORT=3306
+DB_DATABASE=calendar
+DB_USERNAME=test
+DB_PASSWORD=test
+
+XDEBUG:
+
+xdebug.mode=develop,debug
+xdebug.log_level = 0
+xdebug.client_host=host.docker.internal
+xdebug.start_with_request=yes
+xdebug.idekey = XDEBUG
+
+phpMyAdmin:
+
+host: http://localhost:8183
+username: test
+password: test

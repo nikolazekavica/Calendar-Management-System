@@ -1,0 +1,6 @@
+docker-compose exec app rm -rf database/test.sqlite
+docker-compose exec app touch database/test.sqlite
+docker-compose exec app php artisan migrate --seed --env=testing
+docker-compose exec app php artisan passport:client --password --env=testing
+docker-compose exec app ./vendor/bin/phpunit
+php artisan test --coverage
