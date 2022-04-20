@@ -44,8 +44,8 @@ class StoreRequest extends FormRequest
             'availability_status'    => Rule::in(Constants::ENUM_AVAILABILITY_STATUS),
             'description'            => 'required|max:100',
             'is_recurrences'         => 'required|bool|availability_duration:start_date,end_date,7|multiple_recurrences',
-            'start_date_recurrences' => 'required_if:is_recurrences,true|date|after:end_date',
-            'end_date_recurrences'   => 'required_if:is_recurrences,true|date|after:start_date_recurrences'
+            'start_date_recurrences' => 'required_if:is_recurrences,true|date_format:d-m-Y|after:end_date',
+            'end_date_recurrences'   => 'required_if:is_recurrences,true|date_format:d-m-Y|after:start_date_recurrences'
         ];
     }
 
@@ -55,9 +55,13 @@ class StoreRequest extends FormRequest
             'is_recurrences.availability_duration' => 'Availability duration must be shorter than the frequency of recurrence.',
             'is_recurrences.multiple_recurring'    => 'Multiple recurrences are forbidden.',
             'start_date.after_date'                => 'The start date must be a date after or equal to today.',
-            'start_time.date_format'               => 'Time format must be :input. Ex: 12:12',
-            'end_time.date_format'                 => 'Time format must be :input. Ex: 12:12',
-            'is_recurrences.multiple_recurrences'  => 'Multiple recurrences are forbidden for the same user.'
+            'start_time.date_format'               => 'Time format must be H:i. Ex: 12:12',
+            'end_time.date_format'                 => 'Time format must be H:i. Ex: 12:12',
+            'is_recurrences.multiple_recurrences'  => 'Multiple recurrences are forbidden for the same user.',
+            'start_date_recurrences.date_format'   => 'Date format must be d-m-Y. Ex: 12:12:2022',
+            'end_date_recurrences.date_format'     => 'Date format must be d-m-Y. Ex: 12:12:2022',
+            'start_date.date_format'               => 'Date format must be d-m-Y. Ex: 12:12:2022',
+            'end_date.date_format'                 => 'Date format must be d-m-Y. Ex: 12:12:2022',
         ];
     }
 }

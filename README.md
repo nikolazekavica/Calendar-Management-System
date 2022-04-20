@@ -40,7 +40,7 @@ Run the following command from inside your project folder
 
 Run the following command from inside your project folder to generate the a project key
 
-``` docker-compose exec app php artisan key:generate ``` 
+``` php artisan key:generate ``` 
 
 Run he following command from inside your project folder to run migration script
 
