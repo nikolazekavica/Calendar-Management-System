@@ -2,7 +2,8 @@
 2.docker-compose up -d
 3.composer update
 4.composer dump-autoload
-5.php artisan migrate
+5.php artisan key:generate
+6.php artisan migrate
 
 7.php artisan passport:client --password
 	1) set name ex: Calendar Password Grant Client, 
@@ -14,4 +15,5 @@
 	PASSPORT_CLIENT_ID=961095d1-e291-4cbc-9c8c-b8ab41a417a8
 	PASSPORT_CLIENT_SECRET=hicTuEtsIUwBz0TKCID8i5KnMGWWx3ZH4VPDMwWj
 
-6.php artisan db:seed --class=RoleSeeder
+9.  php artisan passport:keys
+10. php artisan db:seed --class=RoleSeeder

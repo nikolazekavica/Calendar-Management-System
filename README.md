@@ -38,6 +38,10 @@ Run the following command from inside your project folder
 
 ``` composer dump-autoload ```
 
+Run the following command from inside your project folder to generate the a project key
+
+``` docker-compose exec app php artisan key:generate ``` 
+
 Run he following command from inside your project folder to run migration script
 
 ```php artisan migrate```
@@ -50,7 +54,11 @@ Run he following command from inside your project folder to generate the passpor
 2) Next continue with 'enter' command
 3) Copy from table oauth_clients: 'id' and 'secret'
 4) Put in .env file parts: PASSPORT_CLIENT_ID and PASSPORT_CLIENT_SECRET
-   
+
+Run he following command from inside your project folder to generate the passport secret and public keys
+
+``` php artisan passport:keys ```
+
 Run he following command from inside your project folder to generate db seeds:
 
 ```php artisan db:seed --class=RoleSeeder```
