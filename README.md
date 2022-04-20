@@ -2,7 +2,17 @@
 
 ## Intro
 
-Code for the REST API for Calendar Management System project. 
+Calendar Management System API.
+
+In this system, the date timezone is set to Europe/Belgrade. Date format is d-m-Y and the time format is H:i.
+
+User have to register and verification his account first. After that user can login in application.
+
+Each of users can have 'regular' or 'admin' role with which they access specified routes.
+
+Depending on the role users can create,filtered and see own availabilities.
+
+Availabilities can be recurring weekly.
 
 ## How to run the Dev environment
 
@@ -38,13 +48,9 @@ Run he following command from inside your project folder to generate the passpor
 
 1) Set name ex: Calendar Password Grant Client
 2) Next continue with 'enter' command
-3) Copy from table oauth_clients: 'id' and 'secret' Ex:(id = 961bbc08-3dcc-4483-93c4-0dfab6895e01, secret = cm9tXLSXMivTsFtxLcizlzxmfEztLzkUyndgLhYH)
-  And put in .env file parts: PASSPORT_CLIENT_ID and PASSPORT_CLIENT_SECRET
-  ex: 
-  
-  PASSPORT_CLIENT_ID=961095d1-e291-4cbc-9c8c-b8ab41a417a8
-  PASSPORT_CLIENT_SECRET=hicTuEtsIUwBz0TKCID8i5KnMGWWx3ZH4VPDMwWj
-
+3) Copy from table oauth_clients: 'id' and 'secret'
+4) Put in .env file parts: PASSPORT_CLIENT_ID and PASSPORT_CLIENT_SECRET
+   
 Run he following command from inside your project folder to generate db seeds:
 
 ```php artisan db:seed --class=RoleSeeder```
