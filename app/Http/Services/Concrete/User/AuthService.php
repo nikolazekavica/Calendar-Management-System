@@ -46,20 +46,17 @@ class AuthService implements AuthServiceInterface
     {
         $token = $this->httpClient
             ->setMethod('POST')
-            ->setHeaders([
-                'Content-Type' => 'application/x-www-form-urlencoded',
-                'x-testing' => app()->environment('testing')
-            ])
-            ->setUrl('http://localhost/oauth/token')
+            ->setHeaders(['Content-Type' => 'application/x-www-form-urlencoded'])
+            ->setUrl(env('APP_URL').'/oauth/token')
             ->setRequest(
                 [
                     'form_params' => [
-                        'grant_type' => 'password',
-                        'client_id' => env('PASSPORT_CLIENT_ID'),
+                        'grant_type'    => 'password',
+                        'client_id'     => env('PASSPORT_CLIENT_ID'),
                         'client_secret' => env('PASSPORT_CLIENT_SECRET'),
-                        'username' => $user->getAttribute('username'),
-                        'password' => $user->getAttribute('password'),
-                        'scope' => $user->role()->value('name'),
+                        'username'      => $user->getAttribute('username'),
+                        'password'      => $user->getAttribute('password'),
+                        'scope'         => $user->role()->value('name'),
                     ]
                 ]
             )->callApi();

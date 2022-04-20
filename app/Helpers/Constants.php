@@ -16,8 +16,8 @@ class Constants
     ];
 
     const ALLOWED_SCOPES = [
-        'regular',
-        'admin'
+        'regular' => 'Regular scope.',
+        'admin'   => 'Admin scope'
     ];
 
     const DATE_FORMAT_MYSQL       = 'Y-m-d';
