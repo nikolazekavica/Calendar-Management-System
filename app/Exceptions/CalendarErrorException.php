@@ -11,7 +11,13 @@ namespace App\Exceptions;
 use Exception;
 use Throwable;
 
-class CalendarErrorException extends  Exception
+/**
+ * Class CalendarErrorException
+ *
+ * @package App\Exceptions
+ * @author  Nikola Zekavica <nikolazekavica88@yahoo.com>
+ */
+class CalendarErrorException extends Exception
 {
     public function __construct(string $message = "", int $code = 0, Throwable $previous = null)
     {
@@ -25,6 +31,6 @@ class CalendarErrorException extends  Exception
                 'message' => $this->message
             ]
         ];
-        return response()->json($data,$this->getCode());
+        return response()->json($data, $this->getCode());
     }
 }

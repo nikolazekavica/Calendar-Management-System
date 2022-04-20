@@ -1,16 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: n.zekavica
- * Date: 9.4.2022.
- * Time: 13:22
- */
 
 namespace App\Providers;
 
 use App\Http\Validators\AvailabilityValidator;
 use Carbon\Laravel\ServiceProvider;
 
+/**
+ * Class ValidatorServiceProvider
+ *
+ * @package App\Providers
+ * @author  Nikola Zekavica <nikolazekavica88@yahoo.com>
+ */
 class ValidatorServiceProvider extends ServiceProvider
 {
     /**

@@ -2,11 +2,19 @@
 
 namespace App\Providers;
 
-use App\Helpers\Constants;
+use App\Http\Services\Concrete\User\RoleService;
 use App\Http\Traits\DateTimeTrait;
+
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+
 use Laravel\Passport\Passport;
 
+/**
+ * Class AuthServiceProviders
+ *
+ * @package App\Providers
+ * @author  Nikola Zekavica <nikolazekavica88@yahoo.com>
+ */
 class AuthServiceProvider extends ServiceProvider
 {
     use DateTimeTrait;
@@ -31,10 +39,9 @@ class AuthServiceProvider extends ServiceProvider
 
         Passport::routes();
 
-        Passport::tokensExpireIn($this->dateTimeNow()->addDays(1));
+        Passport::tokensExpireIn($this->dateTimeNow()->addDays(10));
         Passport::refreshTokensExpireIn($this->dateTimeNow()->addDays(30));
-        //Passport::personalAccessTokensExpireIn($this->dateTimeNow()->addMonths(6));
 
-        Passport::tokensCan(Constants::SCOPES_LIST);
+        Passport::tokensCan(RoleService::getInstance()->all()->toArray());
     }
 }

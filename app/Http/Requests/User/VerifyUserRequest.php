@@ -1,16 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: n.zekavica
- * Date: 14.4.2022.
- * Time: 18:09
- */
 
 namespace App\Http\Requests\User;
 
-
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Class VerifyUserRequest
+ *
+ * @package App\Http\Requests\User
+ * @author  Nikola Zekavica <nikolazekavica88@yahoo.com>
+ */
 class VerifyUserRequest extends FormRequest
 {
     /**

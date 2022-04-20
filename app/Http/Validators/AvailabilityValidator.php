@@ -1,30 +1,36 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: n.zekavica
- * Date: 7.4.2022.
- * Time: 12:21
- */
+
 namespace App\Http\Validators;
 
 use App\Helpers\Constants;
 use App\Models\Availability;
+
 use Carbon\Carbon;
+
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * Class AvailabilityValidator
+ *
+ * @package App\Http\Validators
+ * @author  Nikola Zekavica <nikolazekavica88@yahoo.com>
+ */
 class AvailabilityValidator extends Validator
 {
+    /**
+     * Check availability duration
+     */
     public static function availabilityDuration()
     {
-        self::extend('availability_duration', function($attribute, $value, $params, $validator) {
+        self::extend('availability_duration', function ($attribute, $value, $params, $validator) {
 
             $data = $validator->getData();
 
-            try{
-                $startTime  = Carbon::parse($data[$params[0]]);
-                $finishTime = Carbon::parse($data[$params[1]]);
+            try {
+                $startTime     = Carbon::parse($data[$params[0]]);
+                $finishTime    = Carbon::parse($data[$params[1]]);
                 $totalDuration = $finishTime->diffInDays($startTime);
-            }catch (\Exception $exception){
+            } catch (\Exception $exception) {
                 return false;
             }
 
@@ -32,9 +38,12 @@ class AvailabilityValidator extends Validator
         });
     }
 
+    /**
+     * Check does exist multiple recurring for same user.
+     */
     public static function multipleRecurring()
     {
-        self::extend('multiple_recurrences', function($attribute, $value, $params, $validator) {
+        self::extend('multiple_recurrences', function ($attribute, $value, $params, $validator) {
 
             $data   = $validator->getData();
             $userId = auth('api')->user()->getAuthIdentifier();
@@ -43,8 +52,8 @@ class AvailabilityValidator extends Validator
                 ->timezone(config('app.timezone'))
                 ->format(Constants::DATE_FORMAT_MYSQL);
 
-            if($data['is_recurrences'] == true) {
-                $availability = Availability::where('is_recurrences',1)
+            if ($data['is_recurrences'] == true) {
+                $availability = Availability::where('is_recurrences', 1)
                     ->where('user_id', $userId)
                     ->where(
                         'end_date_recurrences',
@@ -59,16 +68,19 @@ class AvailabilityValidator extends Validator
         });
     }
 
+    /**
+     * Compare two dates.
+     */
     public static function afterDate()
     {
-        self::extend('after_date', function($attribute, $value, $params, $validator) {
+        self::extend('after_date', function ($attribute, $value, $params, $validator) {
 
             $data = $validator->getData();
 
-            try{
-                $dateAndTime = $data['start_date'].' '.$data['start_time'];
+            try {
+                $dateAndTime = $data['start_date'] . ' ' . $data['start_time'];
                 $date        = Carbon::parse($dateAndTime)->getTimestamp();
-            }catch (\Exception $exception){
+            } catch (\Exception $exception) {
                 return false;
             }
 
@@ -76,10 +88,13 @@ class AvailabilityValidator extends Validator
         });
     }
 
+    /**
+     * Check allowed input attributes.
+     */
     public static function allowedAttributes()
     {
-        self::extend('allowed_attributes', function($attribute, $value, $params, $validator) {
-            if(!in_array($attribute, $params)) {
+        self::extend('allowed_attributes', function ($attribute, $value, $params, $validator) {
+            if (!in_array($attribute, $params)) {
                 return false;
             }
 

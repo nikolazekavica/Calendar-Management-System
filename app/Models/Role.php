@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: n.zekavica
- * Date: 13.4.2022.
- * Time: 22:11
- */
 
 namespace App\Models;
 
@@ -12,11 +6,16 @@ use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
+ * Class Roles
+ *
  * @method static Builder create(array $attributes = [])
+ *
+ * @package App\Models
+ * @author  Nikola Zekavica <nikolazekavica88@yahoo.com>
  */
 class Role extends Model
 {
-    protected $table      = 'roles';
+    protected $table = 'roles';
     protected $primaryKey = 'id';
 
     /**
@@ -35,11 +34,12 @@ class Role extends Model
      * @var array
      */
     protected $hidden = [
-        'created_at', 'updated_at'
+        'created_at',
+        'updated_at'
     ];
 
     public function user()
     {
-        return $this->hasMany(User::class,'role_id');
+        return $this->hasMany(User::class, 'role_id');
     }
 }

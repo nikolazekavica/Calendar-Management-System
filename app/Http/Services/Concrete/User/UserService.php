@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: n.zekavica
- * Date: 8.4.2022.
- * Time: 15:01
- */
 
 namespace App\Http\Services\Concrete\User;
 
@@ -13,22 +7,44 @@ use App\Http\Repositories\Concrete\UserRepository;
 use App\Http\Services\Abstraction\User\UserServiceInterface;
 use App\Http\Traits\DateTimeTrait;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Collection;
+
 use Illuminate\Support\Facades\Hash;
 
+/**
+ * Class UserService
+ *
+ * @package App\Http\Services\Concrete\User
+ * @author  Nikola Zekavica <nikolazekavica88@yahoo.com>
+ */
 class UserService implements UserServiceInterface
 {
     use DateTimeTrait;
 
+    /**
+     * @var UserService
+     */
     private static $instance = null;
 
+    /**
+     * @var UserRepositoryInterface
+     */
     protected $userRepository;
 
+    /**
+     * UserService constructor
+     *
+     * @param UserRepositoryInterface $userRepository
+     */
     public function __construct(UserRepositoryInterface $userRepository)
     {
         $this->userRepository = $userRepository;
     }
 
+    /**
+     * Get instance of UserService
+     *
+     * @return UserService
+     */
     public static function getInstance(): self
     {
         if (!isset(self::$instance)) {
@@ -38,7 +54,10 @@ class UserService implements UserServiceInterface
     }
 
     /**
+     * Insert user.
+     *
      * @param array $request
+     *
      * @return array
      */
     public function store(array $request): array
@@ -52,8 +71,11 @@ class UserService implements UserServiceInterface
     }
 
     /**
+     * Update user.
+     *
      * @param array $data
      * @param $userId
+     *
      * @return void
      */
     public function update(array $data, $userId): void
@@ -65,20 +87,26 @@ class UserService implements UserServiceInterface
     }
 
     /**
+     * Get user by email
+     *
      * @param string $email
-     * @return Collection
+     *
+     * @return User
      */
-    public function getByEmail(string $email): Collection
+    public function getByEmail(string $email): User
     {
         return $this->userRepository->getByEmail($email);
     }
 
     /**
-     * @param array $data
+     * Get user by email an password
+     *
+     * @param array $request
+     *
      * @return \App\Models\User
      */
-    public function getByEmailAndPassword(array $data): User
+    public function getByEmailAndPassword(array $request): User
     {
-        return $this->userRepository->getByEmailAndPassword($data);
+        return $this->userRepository->getByEmailAndPassword($request);
     }
 }

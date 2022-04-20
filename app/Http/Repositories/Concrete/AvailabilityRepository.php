@@ -1,50 +1,81 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: n.zekavica
- * Date: 7.4.2022.
- * Time: 10:53
- */
 
 namespace App\Http\Repositories\Concrete;
 
 use App\Http\Repositories\Abstraction\AvailabilityRepositoryInterface;
 use App\Models\Availability;
-use App\Models\User;
-use Illuminate\Database\Eloquent\Builder;
+
 use Illuminate\Database\Eloquent\Collection;
 
+/**
+ * Class AvailabilityRepository
+ *
+ * @package App\Http\Repositories\Concret
+ * @author  Nikola Zekavica <nikolazekavica88@yahoo.com>
+ */
 class AvailabilityRepository implements AvailabilityRepositoryInterface
 {
+    /**
+     * @var Availability
+     */
     protected $model;
 
+    /**
+     * AvailabilityRepository constructor.
+     *
+     * @param Availability $model
+     */
     public function __construct(Availability $model)
     {
         $this->model = $model;
     }
 
-    public function store(array $data):void
+    /**
+     * Store availability.
+     *
+     * @param array $data
+     */
+    public function store(array $data): void
     {
         $this->model->create($data);
     }
 
-    public function allByUserId(int $id):Collection
+    /**
+     * Get availabilities by user id.
+     *
+     * @param int $id
+     *
+     * @return Collection
+     */
+    public function allByUserId(int $id): Collection
     {
         $availabilities = $this->model->where('user_id', $id)->get();
         return $availabilities;
     }
 
-    public function all():Collection
+    /**
+     * Get all availabilities.
+     *
+     * @return Collection
+     */
+    public function all(): Collection
     {
         $availabilities = $this->model->with('user')->get();
         return $availabilities;
     }
 
-    public function filterByUser(array $params):Collection
+    /**
+     * Get all by user params.
+     *
+     * @param array $userParams
+     *
+     * @return Collection
+     */
+    public function filterByUser(array $userParams): Collection
     {
         $query = $this->model->newQuery()->with('user');
 
-        foreach($params as $key => $value){
+        foreach ($userParams as $key => $value) {
             $query->whereRelation('user', $key, $value);
         }
 

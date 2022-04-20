@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Exceptions\CalendarErrorException;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -10,9 +9,14 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
 /**
+ * Class User
+ *
  * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  * @method static Builder create(array $attributes = [])
  * @method public Builder update(array $values)
+ *
+ * @package App\Models
+ * @author  Nikola Zekavica <nikolazekavica88@yahoo.com>
  */
 class User extends Authenticatable
 {
@@ -75,7 +79,6 @@ class User extends Authenticatable
      *
      * @param  string $username
      * @return Builder|\Illuminate\Database\Eloquent\Model|object
-     * @throws CalendarErrorException
      */
     public function findForPassport($username)
     {
@@ -85,7 +88,7 @@ class User extends Authenticatable
     /**
      * Validate the password of the user for the Passport password grant.
      *
-     * @param  string  $password
+     * @param  string $password
      * @return bool
      */
     public function validateForPassportPasswordGrant($password)

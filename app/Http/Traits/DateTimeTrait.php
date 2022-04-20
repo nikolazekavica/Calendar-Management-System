@@ -1,30 +1,45 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: n.zekavica
- * Date: 12.4.2022.
- * Time: 12:00
- */
 
 namespace App\Http\Traits;
 
-
+use App\Helpers\Constants;
 use Carbon\Carbon;
 
+/**
+ * Class DateTimeTrait
+ *
+ * @package App\Http\Traits
+ * @author  Nikola Zekavica <nikolazekavica88@yahoo.com>
+ */
 trait DateTimeTrait
 {
-    public function dateTimeNow():Carbon
+    /**
+     * Date time now
+     *
+     * @return Carbon
+     */
+    public function dateTimeNow(): Carbon
     {
         return Carbon::now()->setTimezone(config('app.timezone'));
     }
 
-    public function endDateLimitSearch():Carbon
+    /**
+     * Start date limit for search
+     *
+     * @return Carbon
+     */
+    public function startDateLimitSearch(): Carbon
     {
-        return $this->dateTimeNow()->addYears(3);
+        return $this->dateTimeNow()->subYears(Constants::START_DATE_LIMIT_SEARCH);
     }
 
-    public function startDateLimitSearch():Carbon
+    /**
+     * End date limit for search
+     *
+     * @return Carbon
+     */
+    public function endDateLimitSearch(): Carbon
     {
-        return $this->dateTimeNow()->subYears(3);
+        return $this->dateTimeNow()->addYears(Constants::END_DATE_LIMIT_SEARCH);
     }
 }

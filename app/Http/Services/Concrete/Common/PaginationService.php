@@ -6,16 +6,23 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
- * Created by PhpStorm.
- * User: n.zekavica
- * Date: 13.4.2022.
- * Time: 12:41
+ * Class PaginationService
+ *
+ * @package App\Http\Services\Concrete\Common
+ * @author  Nikola Zekavica <nikolazekavica88@yahoo.com>
  */
-
 class PaginationService
 {
+    /**
+     * @var PaginationService
+     */
     private static $instance = null;
 
+    /**
+     * Get instance of PaginationService
+     *
+     * @return PaginationService|null
+     */
     public static function getInstance(): self
     {
         if (!isset(self::$instance)) {
@@ -24,7 +31,16 @@ class PaginationService
         return self::$instance;
     }
 
-    public function pagination(Collection $collection, $perPage = 10, $pageName = 'page'): array
+    /**
+     * Pagination results
+     *
+     * @param Collection $collection
+     * @param int $perPage
+     * @param string $pageName
+     *
+     * @return array
+     */
+    public function pagination(Collection $collection, int $perPage = 10, string $pageName = 'page'): array
     {
         $page = LengthAwarePaginator::resolveCurrentPage($pageName);
 
@@ -34,7 +50,7 @@ class PaginationService
             $perPage,
             $page,
             [
-                'path' => LengthAwarePaginator::resolveCurrentPath(),
+                'path'     => LengthAwarePaginator::resolveCurrentPath(),
                 'pageName' => $pageName,
             ]
         );
@@ -43,10 +59,13 @@ class PaginationService
     }
 
     /**
+     * Set response format for pagination.
+     *
      * @param LengthAwarePaginator $data
+     *
      * @return array
      */
-    private function format(LengthAwarePaginator $data) :array
+    private function format(LengthAwarePaginator $data): array
     {
         return [
             'total_results' => $data->total(),

@@ -4,9 +4,16 @@ namespace App\Http\Requests\Availability;
 
 use App\Helpers\Constants;
 use Carbon\Carbon;
+
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
+/**
+ * Class StoreRequest
+ *
+ * @package App\Http\Requests\Availability
+ * @author  Nikola Zekavica <nikolazekavica88@yahoo.com>
+ */
 class StoreRequest extends FormRequest
 {
     /**
@@ -30,7 +37,7 @@ class StoreRequest extends FormRequest
 
         return [
             'title'                  => 'required|max:20',
-            'start_date'             => 'required|date_format:d-m-Y|after_date:'.$dateNow,
+            'start_date'             => 'required|date_format:d-m-Y|after_date:' . $dateNow,
             'end_date'               => 'required|date_format:d-m-Y|after_or_equal:start_date',
             'start_time'             => 'required|date_format:H:i',
             'end_time'               => 'required|date_format:H:i|after:start_time',

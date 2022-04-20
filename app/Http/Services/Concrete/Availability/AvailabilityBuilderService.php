@@ -1,24 +1,34 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: n.zekavica
- * Date: 13.4.2022.
- * Time: 0:23
- */
 
 namespace App\Http\Services\Concrete\Availability;
 
 use App\Helpers\Constants;
 use App\Http\Services\Abstraction\Availability\AvailabilityBuilderServiceInterface;
 use App\Http\Services\Concrete\Common\PaginationService;
+
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+
 use Illuminate\Database\Eloquent\Collection;
 
+/**
+ * Class AvailabilityBuilderService
+ *
+ * @package App\Http\Services\Concrete\Availability
+ * @author  Nikola Zekavica <nikolazekavica88@yahoo.com>
+ */
 class AvailabilityBuilderService implements AvailabilityBuilderServiceInterface
 {
+    /**
+     * @var AvailabilityBuilderService
+     */
     private static $instance = null;
 
+    /**
+     * Get instance of AvailabilityBuilderService
+     *
+     * @return AvailabilityBuilderService
+     */
     public static function getInstance(): self
     {
         if (!isset(self::$instance)) {
@@ -27,50 +37,60 @@ class AvailabilityBuilderService implements AvailabilityBuilderServiceInterface
         return self::$instance;
     }
 
-    public function build(Collection $availabilities, $startDateSearch, $endDateSearch):array
+    /**
+     * Build method builds availabilities by date period. Response contains pagination of availabilities
+     * and in each of them includes pagination of availability dates.
+     *
+     * @param Collection $availabilities
+     * @param $startDateSearch
+     * @param $endDateSearch
+     *
+     * @return array
+     */
+    public function build(Collection $availabilities, $startDateSearch, $endDateSearch): array
     {
         $availabilityProjections = new Collection();
 
-        foreach($availabilities as $availability) {
+        foreach ($availabilities as $availability) {
 
             $availabilityPeriod = CarbonPeriod::create(
                 $availability->getAttribute('start_date'),
                 $availability->getAttribute('end_date'),
-            )->toArray();
+                )->toArray();
 
             $period = new Collection();
 
             foreach ($availabilityPeriod as $availabilityDate) {
 
                 $date                 = $availabilityDate->format(Constants::DATE_FORMAT_PROJECT);
-                $dateWithTime         = $date.' '.$availability->getAttribute('start_time');
+                $dateWithTime         = $date . ' ' . $availability->getAttribute('start_time');
                 $availabilityDateTime = Carbon::parse($dateWithTime)->getTimestamp();
 
-                if($availabilityDateTime     >= $startDateSearch
+                if ($availabilityDateTime    >= $startDateSearch
                     && $availabilityDateTime <= $endDateSearch
                 ) {
                     $period->push($availabilityDate->format(Constants::DATE_FORMAT_PROJECT));
                 }
 
-                if($availability->getAttribute('is_recurrences') == 1) {
+                if ($availability->getAttribute('is_recurrences') == 1) {
 
                     $periodRecurring = CarbonPeriod::create(
                         $availability->getAttribute('start_date_recurrences'),
                         $availability->getAttribute('end_date_recurrences')
                     )->toArray();
 
-                    foreach ($periodRecurring as $recurringDate){
-                        if($availabilityDate->format('l') == $recurringDate->format('l')
-                            && $recurringDate->getTimestamp() >= $startDateSearch
-                            && $recurringDate->getTimestamp() <= $endDateSearch
-                        ){
+                    foreach ($periodRecurring as $recurringDate) {
+                        if ($availabilityDate->format('l') == $recurringDate->format('l')
+                            && $recurringDate->getTimestamp()     >= $startDateSearch
+                            && $recurringDate->getTimestamp()     <= $endDateSearch
+                        ) {
                             $period->push($recurringDate->format(Constants::DATE_FORMAT_PROJECT));
                         }
                     }
                 }
             }
 
-            if($period->isEmpty()) {
+            if ($period->isEmpty()) {
                 continue;
             }
 
@@ -79,7 +99,7 @@ class AvailabilityBuilderService implements AvailabilityBuilderServiceInterface
                 PaginationService::getInstance()->pagination(
                     $period,
                     10,
-                    'period_'.$availability->getAttribute('id').'_page'
+                    'period_' . $availability->getAttribute('id') . '_page'
                 )
             );
 

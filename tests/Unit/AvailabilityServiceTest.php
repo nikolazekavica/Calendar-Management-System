@@ -40,7 +40,6 @@ class AvailabilityServiceTest extends TestCase
         $availabilityCollection->add($availabilityOne);
         $availabilityCollection->add($availabilityTwo);
 
-
         $startDateSearch = $this->startDateLimitSearch()->getTimestamp();
         $endDateSearch   = $this->endDateLimitSearch()->getTimestamp();
 

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: n.zekavica
- * Date: 6.4.2022.
- * Time: 21:41
- */
 
 namespace App\Models;
 
@@ -15,9 +9,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
+ * Class Availability
+ *
  * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  * @method static Builder create(array $attributes = [])
  * @method public Builder update(array $values)
+ *
+ * @package App\Models
+ * @author  Nikola Zekavica <nikolazekavica88@yahoo.com>
  */
 class Availability extends Model
 {
@@ -27,7 +26,7 @@ class Availability extends Model
 
     protected $dateFormat = Constants::DATE_FORMAT_MYSQL;
 
-    protected $table      = 'availabilities';
+    protected $table = 'availabilities';
     protected $primaryKey = 'id';
 
     protected $fillable = [

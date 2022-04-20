@@ -3,18 +3,28 @@
 namespace App\Exceptions;
 
 use App\Helpers\CalendarResponse;
+
 use Carbon\Exceptions\InvalidFormatException;
+
 use Illuminate\Auth\AuthenticationException;
-use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
+
 use Laravel\Passport\Exceptions\MissingScopeException;
+
 use Symfony\Component\ErrorHandler\Error\FatalError;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 use Throwable;
 
+/**
+ * Class Handler
+ *
+ * @package App\Exceptions
+ * @author  Nikola Zekavica <nikolazekavica88@yahoo.com>
+ */
 class Handler extends ExceptionHandler
 {
     /**

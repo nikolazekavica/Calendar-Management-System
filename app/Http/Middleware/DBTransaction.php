@@ -1,23 +1,23 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: n.zekavica
- * Date: 15.4.2022.
- * Time: 0:37
- */
 
 namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Class DBTransaction
+ *
+ * @package App\Http\Middleware
+ * @author  Nikola Zekavica <nikolazekavica88@yahoo.com>
+ */
 class DBTransaction
 {
     /**
-     * Handle an incoming request.
+     * Handle an incoming request and work with db transactions.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \Closure                 $next
+     * @param  \Closure $next
      *
      * @return mixed
      * @throws \Exception

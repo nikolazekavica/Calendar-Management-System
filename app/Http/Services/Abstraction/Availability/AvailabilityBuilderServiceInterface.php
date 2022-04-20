@@ -5,13 +5,22 @@ namespace App\Http\Services\Abstraction\Availability;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
- * Created by PhpStorm.
- * User: n.zekavica
- * Date: 13.4.2022.
- * Time: 16:31
+ * Class AvailabilityBuilderServiceInterface
+ *
+ * @package App\Http\Services\Abstraction\Availability
+ * @author  Nikola Zekavica <nikolazekavica88@yahoo.com>
  */
-
 interface AvailabilityBuilderServiceInterface
 {
-    public function build(Collection $availabilities, $startDateSearch, $endDateSearch):array;
+    /**
+     * Build method builds availabilities by date period. Response contains pagination of availabilities
+     * and in each of them includes pagination of availability dates.
+     *
+     * @param Collection $availabilities
+     * @param $startDateSearch
+     * @param $endDateSearch
+     *
+     * @return array
+     */
+    public function build(Collection $availabilities, $startDateSearch, $endDateSearch): array;
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
@@ -6,12 +7,11 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
 /**
- * Created by PhpStorm.
- * User: n.zekavica
- * Date: 14.4.2022.
- * Time: 17:09
+ * Class UserVerificationMailable
+ *
+ * @package App\Mail
+ * @author  Nikola Zekavica <nikolazekavica88@yahoo.com>
  */
-
 class UserVerificationMailable extends Mailable
 {
     use Queueable, SerializesModels;

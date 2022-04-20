@@ -1,20 +1,46 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: n.zekavica
- * Date: 8.4.2022.
- * Time: 22:56
- */
 
 namespace App\Http\Repositories\Abstraction;
 
-
 use Illuminate\Database\Eloquent\Collection;
 
+/**
+ * Class AvailabilityRepositoryInterface
+ *
+ * @package App\Http\Repositories\Abstraction
+ * @author  Nikola Zekavica <nikolazekavica88@yahoo.com>
+ */
 interface AvailabilityRepositoryInterface
 {
-    public function store(array $data)          :void;
-    public function allByUserId(int $id)        :Collection;
-    public function all()                       :Collection;
-    public function filterByUser(array $params) :Collection;
+    /**
+     * Store availability.
+     *
+     * @param array $data
+     */
+    public function store(array $data): void;
+
+    /**
+     * Get availabilities by user id.
+     *
+     * @param int $id
+     *
+     * @return Collection
+     */
+    public function allByUserId(int $id): Collection;
+
+    /**
+     * Get all availabilities.
+     *
+     * @return Collection
+     */
+    public function all(): Collection;
+
+    /**
+     * Get all by user params.
+     *
+     * @param array $userParams
+     *
+     * @return Collection
+     */
+    public function filterByUser(array $userParams): Collection;
 }

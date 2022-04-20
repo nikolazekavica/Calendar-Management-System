@@ -1,26 +1,40 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: n.zekavica
- * Date: 17.4.2022.
- * Time: 18:47
- */
 
 namespace App\Http\Controllers\Calendar\v1;
 
 use App\Helpers\CalendarResponse;
 use App\Http\Services\Abstraction\User\RoleServiceInterface;
+
 use Illuminate\Http\Response;
 
+/**
+ * Class RoleController
+ *
+ * @package App\Http\Controllers\Calendar\v1
+ * @author  Nikola Zekavica <nikolazekavica88@yahoo.com>
+ */
 class RoleController
 {
+    /**
+     * @var RoleServiceInterface
+     */
     private $roleService;
 
+    /**
+     * RoleController constructor.
+     *
+     * @param RoleServiceInterface $roleService
+     */
     public function __construct(RoleServiceInterface $roleService)
     {
         $this->roleService = $roleService;
     }
 
+    /**
+     * Get all roles
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function all()
     {
         $roles = $this->roleService->all();

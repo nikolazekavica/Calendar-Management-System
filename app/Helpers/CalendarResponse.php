@@ -1,16 +1,17 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: n.zekavica
- * Date: 7.4.2022.
- * Time: 15:07
- */
+
 namespace App\Helpers;
 
 use Illuminate\Http\JsonResponse;
 
 use stdClass;
 
+/**
+ * Class CalendarResponse
+ *
+ * @package App\Helpers
+ * @author  Nikola Zekavica <nikolazekavica88@yahoo.com>
+ */
 class CalendarResponse
 {
     /**
@@ -23,12 +24,12 @@ class CalendarResponse
     {
         $response = [
             'success' => [
-                'data'    => $data,
+                'data' => $data,
                 'message' => $message
             ]
         ];
 
-        return response()->json($response,$code);
+        return response()->json($response, $code);
     }
 
     /**
@@ -43,16 +44,16 @@ class CalendarResponse
                 'message' => $message
             ]
         ];
-        return response()->json($data,$code);
+        return response()->json($data, $code);
     }
 
     public static function multipleError(array $errors, int $code): JsonResponse
     {
         $errorDataArray = [];
 
-        foreach ($errors as $param => $message){
+        foreach ($errors as $param => $message) {
 
-            $errorData = new stdClass();
+            $errorData          = new stdClass();
             $errorData->param   = $param;
             $errorData->message = $message;
 

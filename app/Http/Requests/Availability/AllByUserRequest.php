@@ -1,15 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: n.zekavica
- * Date: 16.4.2022.
- * Time: 23:45
- */
 
 namespace App\Http\Requests\Availability;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Class AllByUserRequest
+ *
+ * @package App\Http\Requests\Availability
+ * @author  Nikola Zekavica <nikolazekavica88@yahoo.com>
+ */
 class AllByUserRequest extends FormRequest
 {
     /**

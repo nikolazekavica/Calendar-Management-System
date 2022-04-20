@@ -1,16 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: n.zekavica
- * Date: 11.4.2022.
- * Time: 17:23
- */
 
 namespace App\Http\Requests\Availability;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Request;
 
+/**
+ * Class DateTimeTrait
+ *
+ * @package App\Http\Requests\Availability
+ * @author  Nikola Zekavica <nikolazekavica88@yahoo.com>
+ */
 class AllByDateRangeRequest extends FormRequest
 {
     /**

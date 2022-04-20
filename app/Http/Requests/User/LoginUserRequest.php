@@ -1,14 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: n.zekavica
- * Date: 15.4.2022.
- * Time: 13:45
- */
+
 namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Class LoginUserRequest
+ *
+ * @package App\Http\Requests\User
+ * @author  Nikola Zekavica <nikolazekavica88@yahoo.com>
+ */
 class LoginUserRequest extends FormRequest
 {
     /**

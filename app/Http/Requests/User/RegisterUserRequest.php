@@ -1,14 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: n.zekavica
- * Date: 8.4.2022.
- * Time: 14:25
- */
+
 namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Class RegisterUserRequest
+ *
+ * @package App\Http\Requests\User
+ * @author  Nikola Zekavica <nikolazekavica88@yahoo.com>
+ */
 class RegisterUserRequest extends FormRequest
 {
     /**
@@ -40,8 +41,8 @@ class RegisterUserRequest extends FormRequest
     public function messages()
     {
         return [
-            'password.regex' => 'Incorrect password format. Password length (min. 6 characters and max. 20).'.
-                'Must contain letters,numbers,capital letter and special characters(!@#%&*).'.
+            'password.regex' => 'Incorrect password format. Password length (min. 6 characters and max. 20).' .
+                'Must contain letters,numbers,capital letter and special characters(!@#%&*).' .
                 'Spaces are not permitted.',
         ];
     }

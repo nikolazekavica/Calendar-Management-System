@@ -1,18 +1,33 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: n.zekavica
- * Date: 15.4.2022.
- * Time: 17:09
- */
 
 namespace App\Http\Services\Abstraction\User;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 
+/**
+ * Class LoginServiceInterface
+ *
+ * @package App\Http\Services\Abstraction\User
+ * @author  Nikola Zekavica <nikolazekavica88@yahoo.com>
+ */
 interface LoginServiceInterface
 {
-    public function login(array $data);
-    public function logout(Request $data);
+    /**
+     * Login user.
+     *
+     * @param $request
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function login(array $request);
+
+    /**
+     * Logout user.
+     *
+     * @param Request $request
+     *
+     * @return void
+     */
+    public function logout(Request $request);
 }

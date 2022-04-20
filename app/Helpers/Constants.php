@@ -1,22 +1,18 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: n.zekavica
- * Date: 6.4.2022.
- * Time: 22:09
- */
+
 namespace App\Helpers;
 
+/**
+ * Class Constants
+ *
+ * @package App\Helpers
+ * @author  Nikola Zekavica <nikolazekavica88@yahoo.com>
+ */
 class Constants
 {
     const ENUM_AVAILABILITY_STATUS = [
         'busy',
         'free'
-    ];
-
-    const SCOPES_LIST             = [
-        'admin'   => 'Admin permissions.',
-        'regular' => 'Regular user permissions'
     ];
 
     const DATE_FORMAT_MYSQL       = 'Y-m-d';
@@ -29,4 +25,6 @@ class Constants
 
     const VERIFICATION_USER_LINK  = '/api/users/verify?code=';
 
+    const START_DATE_LIMIT_SEARCH = 3;
+    const END_DATE_LIMIT_SEARCH   = 3;
 }
