@@ -15,6 +15,11 @@ class Constants
         'free'
     ];
 
+    const ALLOWED_SCOPES = [
+        'regular',
+        'admin'
+    ];
+
     const DATE_FORMAT_MYSQL       = 'Y-m-d';
     const TIME_FORMAT_MYSQL       = 'H:i:s';
     const DATETIME_FORMAT_MYSQL   = 'Y-m-d H:i:s';
