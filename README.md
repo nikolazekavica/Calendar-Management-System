@@ -53,9 +53,6 @@ To access laravel homepage just use [http://0.0.0.0:8080](http://0.0.0.0:8080)
 
 ## Dev environment
 
-<p align="center"><img src="https://www.docker.com/sites/default/files/mono-horizontal.png" height="80"><img src="https://laravel.com/assets/img/components/logo-laravel.svg" height="60"> <img src="https://www.mysql.com/common/logos/includes-mysql-125x64.png"  height="60">   <img src="https://cdn-1.wp.nginx.com/wp-content/uploads/2018/09/nginx-social-share-1.png" height="60">
-</p>
-
 <p align="center">
 <img src="https://img.shields.io/badge/Laravel-v9.2-blue.svg">
 <img src="https://img.shields.io/badge/MySQL-v8.0.28-blue.svg">

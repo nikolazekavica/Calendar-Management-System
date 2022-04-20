@@ -28,7 +28,7 @@ Response 201 (application/json)
             }
         }
 
-### Error
+### Error required input
 
 Request (application/json)
 
@@ -39,6 +39,7 @@ Request (application/json)
             "password": "Test123!",
             "role_id": 1
         }
+
 Response 422 (application/json)
 
         {
@@ -58,7 +59,7 @@ Response 422 (application/json)
             ]
         }
 
-### Verify User [GET /users/verify?code=]
+### Verify User [GET /users/verify]
 
 ### Success
 
@@ -74,7 +75,7 @@ Response 200 (application/json)
              }
         }
 
-### Error
+### Error incorrect code
 
 Parameters
     code: eyJpdiI6IldxditKW
@@ -84,6 +85,19 @@ Response 400 (application/json)
         {
             "errors": {
                 "message":"Verification link is not valid."
+             }
+        }
+
+### Error user already verified
+
+Parameters
+    code: eyJpdiI6IldxditKWDBGN0lQVjlaS0RJSkRSMWc9PSIsInZhbHVlIjoiemk4dnBwNHlPY2JuRkV1YVFhTGZWU20zVnpDVVF3
+
+Response 409 (application/json)
+
+        {
+            "errors": {
+                "message":"User already verified."
              }
         }
 
@@ -107,7 +121,7 @@ Response 200 (application/json)
             "refresh_token": "def502003e9c88d83bb74416d42e5afed73ef0723095a21d47e2c225868eb7f1d73144d549c406db422dbb4326029a3884a16f17629e58963a1635bd910b98a96e6176cd491d4bdb2b55d2a46288ecc9e3ae13ed64984a19894e806192c917a8eb59c81a7a0810a2693fdcef5f04ec67c3f19fa5a02321ceff218a455135496ebe86d82622cf74acd6dcb2661db905cafbb8dd48f39e0b6e27c3c0918736866f06b47ee14893083dffdc0cd90c2805c1b542a6b6fca6805ec6cda24072b81d46d1dadc07d80bfe2b1f4ead5b5f3a889545e175eb6cce996f06c0ed4f6ac0ebbcdc96d548c119716849787cb48d9e6e5827af17fa8a3205b264a8e969b415817dac863e49e84d1fdebc56e8de987d6a7c6e4cd6033d8fa2ac188e44c00a10cde43b5850d54f802c8a97229ea0636991c3487c317b045345a75277f0eeb89799d5c7d327d23d73392f6a4ab037fafa5ad9d55253c6ffc630d7fe0403c7a2695bdab0de900c85c8a5f632602e77fd36693d7f4b5c465cd8498f7f47ee0223278006fd4bdd337330e968bec7ea820d"
         }
 
-### Error
+### Error email does not exit
 
 Request (application/json)
 
@@ -117,6 +131,7 @@ Request (application/json)
         }
 
 Response 422 (application/json)
+
         {
             "errors": [
                 {
@@ -128,7 +143,41 @@ Response 422 (application/json)
             ]
         }
 
-### Login User [POST /users/logout]
+### Error user not verified
+
+Request (application/json)
+
+        {
+            "email": "test@gmail.com",
+            "password": "Test123!"
+        }
+
+Response 401 (application/json)
+
+        {
+            "errors": {
+                "message":"User account is not verified."
+             }
+        }
+
+### Error user put incorrect password
+
+Request (application/json)
+
+        {
+            "email": "test@gmail.com",
+            "password": "Test12345!"
+        }
+
+Response 403 (application/json)
+
+        {
+            "errors": {
+                "message":"Incorrect password."
+             }
+        }
+
+### Logout User [POST /users/logout]
 
 ### Success
 
@@ -144,7 +193,7 @@ Response 200 (application/json)
              }
         }
 
-### Error
+### Error token not exist
 
 Headers
     Authorization:
@@ -157,7 +206,7 @@ Response 401 (application/json)
              }
         }
 
-### Roles [GET /users/roles]
+### Get roles [GET /users/roles]
 
 ### Success
 
@@ -182,7 +231,7 @@ Response 200 (application/json)
             }
         }
 
-### Error
+### Error token not exist
 
 Headers
     Authorization:
@@ -200,6 +249,7 @@ Response 401 (application/json)
 
 
 ### Success
+
 Parameters
     id: 1
 
@@ -247,10 +297,11 @@ Response 200 (application/json)
             }
         }
 
-### Error
+### Error user with incorrect permission
 
 Parameters
     id:2
+
 Headers:
     Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5NjFiYzJhZC1iZDI1LTRiNmItOWUxOS0zYzRmZWZlZWMxMDEiLCJqdGkiOiI1Yjc0ZGI4MmM2NmU5ZjA0ZWRiMWYzZmZmZWZkZjZmM2Y2NGM1ZDE1NDFlZGJmNDFlNGIxNTgzNTlkOGVmNmEwMTQ3ZGNmMjQ0ZjM3YWQ2YSIsImlhdCI6MTY1MDQ2NjUyNi43NzI2MzksIm5iZiI6MTY1MDQ2NjUyNi43NzI2NDUsImV4cCI6MTY1MTMzMDUyNi41MDYxMjIsInN1YiI6IjIiLCJzY29wZXMiOlsicmVndWxhciJdfQ.GETlVPJjxmU8oF5UkhJUkGJTrDpBvNGifN8RouYxM5iOR70byjAv4u5xj_1Ginc6ziR5IrVkMWcu9V62bRtrfi764_Dt4XiayLfCnLE5XV6dxNdX_4klK3f57yQ07u3S8d3M7hJOTH-q626jp6y5B1JF7FOw_GhsktoMdSLkkS4TWn2PC6EYIJ2Cy37k_dDUB_vgNC-ZRvvlwXKS0x_TZRJEQ--6tnZnjxn4G90dF7yUvymqzlXAhVvgzekkupEblVasXCzljGHJwlyuXi048loJ7GOUtcUONskf43vgU9Awj-hoy-4cVu_B46F81dqRcVrBcNYL9Ub2Nv-wYF4eF0X3s5KpRQzo4aQiZmvL5RJx-_gdjSoQ4MlCJE5hXbEzWqvbkhOw0eQphXK8Flr-IlMGgxZZ942Ksx9KMH4pe-HjkZ-xS2FVIcml_6RUws1X86ACYg3AiEfgUkNGUCFZgvL-NuUbv-IEJgo7ax95c1Uzj6Rshxc-5H1DLNjjhAj0ww2XN4FnloyqUWqgWzXnzuxk9OkHsI1KKc1bEofp7hjHLJgE6QibZs7kMvqzC4rG17gp1gv95W3lp-eEynTOEmo-KgMX0WkadBlW51xkPLphQ9LuK6yghPtbHys-LNT4tnlLMCogr9BcVn9NYu0s8FVmtBzz3aRxyATqCEET4Js
 
@@ -262,7 +313,7 @@ Response 403 (application/json)
             }
         }
 
-### Get all availabilities filtered by user params.Only admin. [GET users/filter/availabilities]
+### Get all availabilities filtered by user params. Only admin. [GET users/filter/availabilities]
 
 Parameters:
     username:test123
@@ -321,7 +372,7 @@ Response 200 (application/json)
             }
         }
 
-### Error
+### Error allowed params
 
 Parameters:
     username: test
@@ -378,7 +429,7 @@ Response 201 (application/json)
             }
         }
 
-### Error
+### Error required input
 
 Headers
     Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5NjFiYzJhZC1iZDI1LTRiNmItOWUxOS0zYzRmZWZlZWMxMDEiLCJqdGkiOiI1Yjc0ZGI4MmM2NmU5ZjA0ZWRiMWYzZmZmZWZkZjZmM2Y2NGM1ZDE1NDFlZGJmNDFlNGIxNTgzNTlkOGVmNmEwMTQ3ZGNmMjQ0ZjM3YWQ2YSIsImlhdCI6MTY1MDQ2NjUyNi43NzI2MzksIm5iZiI6MTY1MDQ2NjUyNi43NzI2NDUsImV4cCI6MTY1MTMzMDUyNi41MDYxMjIsInN1YiI6IjIiLCJzY29wZXMiOlsicmVndWxhciJdfQ.GETlVPJjxmU8oF5UkhJUkGJTrDpBvNGifN8RouYxM5iOR70byjAv4u5xj_1Ginc6ziR5IrVkMWcu9V62bRtrfi764_Dt4XiayLfCnLE5XV6dxNdX_4klK3f57yQ07u3S8d3M7hJOTH-q626jp6y5B1JF7FOw_GhsktoMdSLkkS4TWn2PC6EYIJ2Cy37k_dDUB_vgNC-ZRvvlwXKS0x_TZRJEQ--6tnZnjxn4G90dF7yUvymqzlXAhVvgzekkupEblVasXCzljGHJwlyuXi048loJ7GOUtcUONskf43vgU9Awj-hoy-4cVu_B46F81dqRcVrBcNYL9Ub2Nv-wYF4eF0X3s5KpRQzo4aQiZmvL5RJx-_gdjSoQ4MlCJE5hXbEzWqvbkhOw0eQphXK8Flr-IlMGgxZZ942Ksx9KMH4pe-HjkZ-xS2FVIcml_6RUws1X86ACYg3AiEfgUkNGUCFZgvL-NuUbv-IEJgo7ax95c1Uzj6Rshxc-5H1DLNjjhAj0ww2XN4FnloyqUWqgWzXnzuxk9OkHsI1KKc1bEofp7hjHLJgE6QibZs7kMvqzC4rG17gp1gv95W3lp-eEynTOEmo-KgMX0WkadBlW51xkPLphQ9LuK6yghPtbHys-LNT4tnlLMCogr9BcVn9NYu0s8FVmtBzz3aRxyATqCEET4Js
@@ -410,7 +461,7 @@ Response 422 (application/json)
             ]
         }
 
-### Error
+### Error multiple recurrences
 
 Headers:
     Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5NjFiYzJhZC1iZDI1LTRiNmItOWUxOS0zYzRmZWZlZWMxMDEiLCJqdGkiOiI1Yjc0ZGI4MmM2NmU5ZjA0ZWRiMWYzZmZmZWZkZjZmM2Y2NGM1ZDE1NDFlZGJmNDFlNGIxNTgzNTlkOGVmNmEwMTQ3ZGNmMjQ0ZjM3YWQ2YSIsImlhdCI6MTY1MDQ2NjUyNi43NzI2MzksIm5iZiI6MTY1MDQ2NjUyNi43NzI2NDUsImV4cCI6MTY1MTMzMDUyNi41MDYxMjIsInN1YiI6IjIiLCJzY29wZXMiOlsicmVndWxhciJdfQ.GETlVPJjxmU8oF5UkhJUkGJTrDpBvNGifN8RouYxM5iOR70byjAv4u5xj_1Ginc6ziR5IrVkMWcu9V62bRtrfi764_Dt4XiayLfCnLE5XV6dxNdX_4klK3f57yQ07u3S8d3M7hJOTH-q626jp6y5B1JF7FOw_GhsktoMdSLkkS4TWn2PC6EYIJ2Cy37k_dDUB_vgNC-ZRvvlwXKS0x_TZRJEQ--6tnZnjxn4G90dF7yUvymqzlXAhVvgzekkupEblVasXCzljGHJwlyuXi048loJ7GOUtcUONskf43vgU9Awj-hoy-4cVu_B46F81dqRcVrBcNYL9Ub2Nv-wYF4eF0X3s5KpRQzo4aQiZmvL5RJx-_gdjSoQ4MlCJE5hXbEzWqvbkhOw0eQphXK8Flr-IlMGgxZZ942Ksx9KMH4pe-HjkZ-xS2FVIcml_6RUws1X86ACYg3AiEfgUkNGUCFZgvL-NuUbv-IEJgo7ax95c1Uzj6Rshxc-5H1DLNjjhAj0ww2XN4FnloyqUWqgWzXnzuxk9OkHsI1KKc1bEofp7hjHLJgE6QibZs7kMvqzC4rG17gp1gv95W3lp-eEynTOEmo-KgMX0WkadBlW51xkPLphQ9LuK6yghPtbHys-LNT4tnlLMCogr9BcVn9NYu0s8FVmtBzz3aRxyATqCEET4Js
@@ -564,7 +615,7 @@ Response 200 (application/json)
             }
         }
 
-### Error
+### Error incorrect permissions
 
 Headers:
     Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5NjFiYzJhZC1iZDI1LTRiNmItOWUxOS0zYzRmZWZlZWMxMDEiLCJqdGkiOiI1Yjc0ZGI4MmM2NmU5ZjA0ZWRiMWYzZmZmZWZkZjZmM2Y2NGM1ZDE1NDFlZGJmNDFlNGIxNTgzNTlkOGVmNmEwMTQ3ZGNmMjQ0ZjM3YWQ2YSIsImlhdCI6MTY1MDQ2NjUyNi43NzI2MzksIm5iZiI6MTY1MDQ2NjUyNi43NzI2NDUsImV4cCI6MTY1MTMzMDUyNi41MDYxMjIsInN1YiI6IjIiLCJzY29wZXMiOlsicmVndWxhciJdfQ.GETlVPJjxmU8oF5UkhJUkGJTrDpBvNGifN8RouYxM5iOR70byjAv4u5xj_1Ginc6ziR5IrVkMWcu9V62bRtrfi764_Dt4XiayLfCnLE5XV6dxNdX_4klK3f57yQ07u3S8d3M7hJOTH-q626jp6y5B1JF7FOw_GhsktoMdSLkkS4TWn2PC6EYIJ2Cy37k_dDUB_vgNC-ZRvvlwXKS0x_TZRJEQ--6tnZnjxn4G90dF7yUvymqzlXAhVvgzekkupEblVasXCzljGHJwlyuXi048loJ7GOUtcUONskf43vgU9Awj-hoy-4cVu_B46F81dqRcVrBcNYL9Ub2Nv-wYF4eF0X3s5KpRQzo4aQiZmvL5RJx-_gdjSoQ4MlCJE5hXbEzWqvbkhOw0eQphXK8Flr-IlMGgxZZ942Ksx9KMH4pe-HjkZ-xS2FVIcml_6RUws1X86ACYg3AiEfgUkNGUCFZgvL-NuUbv-IEJgo7ax95c1Uzj6Rshxc-5H1DLNjjhAj0ww2XN4FnloyqUWqgWzXnzuxk9OkHsI1KKc1bEofp7hjHLJgE6QibZs7kMvqzC4rG17gp1gv95W3lp-eEynTOEmo-KgMX0WkadBlW51xkPLphQ9LuK6yghPtbHys-LNT4tnlLMCogr9BcVn9NYu0s8FVmtBzz3aRxyATqCEET4Js
@@ -642,7 +693,7 @@ Response 200 (application/json)
             }
         }
 
-### Error
+### Error range time
 
 Parameters:
     start_date: 25-5-202
