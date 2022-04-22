@@ -8,6 +8,8 @@
 
 namespace Tests\Feature;
 
+use App\Helpers\Constants;
+use App\Http\Traits\DateTimeTrait;
 use App\Models\Availability;
 use App\Models\User;
 use Illuminate\Http\Response;
@@ -18,6 +20,8 @@ use Tests\TestCase;
 
 class AvailabilityControllerTest extends TestCase
 {
+    use DateTimeTrait;
+
     //AVAILABILITY STORE
     /**
      * A basic test example.
@@ -132,8 +136,8 @@ class AvailabilityControllerTest extends TestCase
 
         $availability = Availability::factory()->make([
             'user_id'        => $user->getAttribute('id'),
-            "start_date"     => "22-04-2022",
-            "end_date"       => "22-05-2022",
+            "start_date"     => $this->dateTimeNow()->addDays(1)->format(Constants::DATE_FORMAT_PROJECT),
+            "end_date"       => $this->dateTimeNow()->addDays(20)->format(Constants::DATE_FORMAT_PROJECT),
             'is_recurrences' => true
         ]);
 
@@ -160,8 +164,8 @@ class AvailabilityControllerTest extends TestCase
 
         $availability = Availability::factory()->make([
             'user_id'        => $user->getAttribute('id'),
-            "start_date"     => "01-03-2022",
-            "end_date"       => "22-04-2022",
+            "start_date"     => $this->dateTimeNow()->subDays(2)->format(Constants::DATE_FORMAT_PROJECT),
+            "end_date"       => $this->dateTimeNow()->addDays(10)->format(Constants::DATE_FORMAT_PROJECT),
             "is_recurrences" =>  false,
         ]);
 
@@ -383,8 +387,8 @@ class AvailabilityControllerTest extends TestCase
         Availability::query()->truncate();
         Availability::create($availability->getAttributes());
 
-        $startDate = '01-04-2022';
-        $endData   = '25-04-2022';
+        $startDate = $this->dateTimeNow()->addDays(2)->format(Constants::DATE_FORMAT_PROJECT);
+        $endData   = $this->dateTimeNow()->addDays(5)->format(Constants::DATE_FORMAT_PROJECT);
 
         $response = $this->get('api/availabilities/filter?start_date='.$startDate.'&end_date='.$endData);
 
@@ -449,10 +453,10 @@ class AvailabilityControllerTest extends TestCase
         Availability::query()->truncate();
         Availability::create($availability->getAttributes());
 
-        $startDate = '01-04-2022';
-        $endData   = '25-04-2022';
+        $startDate = $this->dateTimeNow()->addDays(2)->format(Constants::DATE_FORMAT_PROJECT);
+        $endData   = $this->dateTimeNow()->addDays(5)->format(Constants::DATE_FORMAT_PROJECT);
 
-        $response = $this->get('api/availabilities/filter?start_date='.$startDate.'&end_date='.$endData);
+        $response  = $this->get('api/availabilities/filter?start_date='.$startDate.'&end_date='.$endData);
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);
         $response->assertJson([
@@ -478,8 +482,8 @@ class AvailabilityControllerTest extends TestCase
         Availability::query()->truncate();
         Availability::create($availability->getAttributes());
 
-        $startDate = '01-04-2022';
-        $endData   = '25-06-2022';
+        $startDate = $this->dateTimeNow()->addDays(2)->format(Constants::DATE_FORMAT_PROJECT);
+        $endData   = $this->dateTimeNow()->addDays(40)->format(Constants::DATE_FORMAT_PROJECT);
 
         $response  = $this->get('api/availabilities/filter?start_date=' . $startDate . '&end_date=' . $endData);
 

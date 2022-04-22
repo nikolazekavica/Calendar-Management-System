@@ -27,7 +27,7 @@ class AvailabilityFactory extends Factory
 
         return [
             'title'                  => $this->faker->text(20),
-            'start_date'             => $this->faker->date($dateNow->addDays(3)->format(Constants::DATE_FORMAT_PROJECT)),
+            'start_date'             => $this->faker->date($dateNow->addDays(1)->format(Constants::DATE_FORMAT_PROJECT)),
             'end_date'               => $this->faker->date($dateNow->addDays(5)->format(Constants::DATE_FORMAT_PROJECT)),
             'start_time'             => $this->faker->time($dateNow->addMinutes(10)->format('H:i')),
             'end_time'               => $this->faker->time($dateNow->addMinutes(20)->format('H:i')),
