@@ -12,6 +12,7 @@ use App\Helpers\Constants;
 use App\Http\Traits\DateTimeTrait;
 use App\Models\Availability;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
@@ -202,12 +203,23 @@ class AvailabilityControllerTest extends TestCase
         ]);
 
         Availability::query()->truncate();
+
+        $availability->setAttribute('start_date',             Carbon::now()->format('Y-m-d'));
+        $availability->setAttribute('end_date',               Carbon::now()->addDays(3)->format('Y-m-d'));
+        $availability->setAttribute('start_date_recurrences', Carbon::now()->format('Y-m-d'));
+        $availability->setAttribute('end_date_recurrences',   Carbon::now()->addDays(3)->format('Y-m-d'));
+
         Availability::create($availability->getAttributes());
 
-        $responseRepeat = $this->post('/api/availabilities', $availability->getAttributes());
+        $availabilityNew = Availability::factory()->make([
+            'user_id'        => $user->getAttribute('id'),
+            "is_recurrences" => true,
+        ]);
 
-        $responseRepeat->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
-        $responseRepeat->assertJson([
+        $response = $this->post('/api/availabilities', $availabilityNew->getAttributes());
+
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+        $response->assertJson([
             "errors" => [
                 [
                     "param"   => "is_recurrences",
